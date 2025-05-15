@@ -1,0 +1,149 @@
+:root{
+--bg-dark: #212529;
+--color-i-constrast: #6a6a6a;
+--color-text-default:#ececec;
+--bs-tertiary-bg-rgb: 43, 48, 53;
+--bs-border-color: #495057;
+}
+
+*{
+  font-family:Helvetica,Arial,sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1{
+color:var(--color-text-default);
+}
+h2{
+color:var(--color-text-default);
+}
+
+
+.svg-icon{
+  fill:var(--color-text-default)
+}
+.svg-icon:hover{
+  fill: var(--color-i-constrast);
+ transition: fill 200ms ease-in-out;
+}
+
+.aphorism{
+  font-weight: 100;
+}
+
+.bg-service{
+background-color:#212529;
+}
+
+.menu-side{
+  width: 280px;
+  height: auto;
+}
+
+.version{
+    color:var(--color-i-constrast);
+    font-size: 0.8em;
+    text-align: center;
+}
+.version-number{
+    color:var(--color-i-constrast);
+}
+
+.divider-b {
+width: 100%;
+background-color: rgba(0, 0, 0, .1);
+border: solid rgba(0, 0, 0, .15);
+box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+.author-signature{
+font-style:normal;
+color: #515151;;
+}
+
+
+   .divider {
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+}
+
+    .divider-a {
+    flex-shrink: 0;
+    width: 1rem;
+    height: auto;
+}
+
+
+.item-card{    
+background-color: rgba(var(--bs-tertiary-bg-rgb), 1);
+border: 1px solid var(--bs-border-color) !important;
+}
+
+
+.item-card h3,p,i{
+  color:var(--color-text-default);
+  margin: 0;
+}
+
+.title-metrics{
+  text-align: center;
+  width:76px;
+  color: var(--color-text-default);
+  padding: 15px 10px;
+  font-size: 1.4em;
+  font-weight: 800;
+}
+.metrics-udm{
+  color: var(--color-text-default);
+  font-size: 0.6em;
+  font-weight: 100;
+}
+.metrics-value{
+  color: var(--color-text-default);
+  padding: 15px 20px;
+  font-size: 1.1em;
+  font-weight: 400;
+}
+
+.divider-metrics{
+  background-color:var(--bs-border-color);
+  height: auto!important;
+  width: 1px!important;
+}
+
+.li-menu-desktop{
+  display: contents;
+}
+
+.icon-menu{
+  font-size: 1em;
+}
+
+@media screen and (max-width: 768px){
+  .li-menu-desktop{
+    display: none;
+  }
+  .menu-side {
+    width: 84px;
+  }
+  .version-desktop-menu{
+    display: none;
+  }
+  .icon-menu{
+  font-size:1.35em;
+  }
+
+}
+
+
+
+/* Stile del form generale */
+
+.form-api{
+  background-color: rgba(var(--bs-tertiary-bg-rgb), 1);
+  border: 1px solid var(--bs-border-color) !important;
+  width:100% ;
+}
