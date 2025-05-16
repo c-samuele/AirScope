@@ -9,40 +9,6 @@
     <link rel="stylesheet" href="assets/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<style>
-.container-metrics {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 colonne */
-  grid-auto-rows: auto;
-  gap: 1rem;
-}
-.container-form {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: auto;
-  gap: 1rem;
-}
-.form-control[type=file]{
-color: var(--color-text-default);}
-
-@media screen and (max-width: 1200px){
-  .container-metrics {
-    grid-template-columns: repeat(3, 1fr); /* 2 colonne per schermi piccoli */
-  }
-  
-}
-@media screen and (max-width: 700px){
-  .container-metrics {
-    grid-template-columns: repeat(2, 1fr); /* 2 colonne per schermi piccoli */
-  }}
-@media screen and (max-width: 600px){
-  .container-metrics {
-    grid-template-columns: repeat(1, 1fr); /* 2 colonne per schermi piccoli */
-  }
-  
-}
-
-</style>
 
 <body class="bg-service" >
 
@@ -63,9 +29,8 @@ color: var(--color-text-default);}
           </g>
         </g>
         </svg>
-
       <div class="version-desktop-menu px-3">
-        <span class="fs-5">AirScope<br>
+        <span class="title">AirScope<br>
         <span class="version-number"></span></span>
       </div>
     </a>
@@ -75,21 +40,21 @@ color: var(--color-text-default);}
 
     <ul id="menu-nav" class="nav nav-pills flex-column">
       <li class="nav-item">
-        <a href="#" class="nav-link text-white active" aria-current="page">
+        <a id="dashboard-btn" href="#" class="nav-link text-white active" aria-current="page">
           <i class="bi bi-columns-gap icon-menu"></i>
           <span class="li-menu-desktop">Dashboard</span>
         </a>
       </li>
 
       <li>
-        <a href="#" class="nav-link text-white">
+        <a id="analitics-btn" href="#" class="nav-link text-white">
          <i class="bi bi-speedometer icon-menu"></i>
           <span class="li-menu-desktop">Analytics</span>
         </a>
       </li>
 
       <li>
-        <a href="#" class="nav-link text-white">
+        <a id="request-btn" href="#" class="nav-link text-white">
           <i class="bi bi-cloud-arrow-up icon-menu"></i>
           <span class="li-menu-desktop">Requests</span>
         </a>
@@ -106,72 +71,9 @@ color: var(--color-text-default);}
 
   <div class="divider divider-a"></div>
 
-  <section class="flex-grow-1 p-4">
-    <div class="container-fluid">
 
-    <!-- TITOLO -->
-      <div class="col-12 mb-3">
-        <h1>Average air quality</h1>
-      </div>
-    <!-- END TITOLO -->
-
-    <!-- METRICHE -->
-   <div class="container-metrics">
-    
-      <section class="d-flex flex-row item-card rounded-3">
-        <h3 class="title-metrics">CO</h3>
-        <div class="divider-metrics"></div>
-        <i class="metrics-value"> <span class="metrics-udm">[mg/m³]</span></i>
-      </section>
-      
-      <section class="d-flex flex-row item-card rounded-3">
-        <h3 class="title-metrics">NO2</h3>
-        <div class="divider-metrics"></div>
-        <i class="metrics-value"> <span class="metrics-udm">[μg/m³]</span></i>
-      </section>
-    
-      <section class="d-flex flex-row item-card rounded-3">
-        <h3 class="title-metrics">NOx</h3>
-        <div class="divider-metrics"></div>
-        <i class="metrics-value"> <span class="metrics-udm">[μg/m³]</span></i>
-      </section>
-    
-      <section class="d-flex flex-row item-card rounded-3">
-        <h3 class="title-metrics">O3</h3>
-        <div class="divider-metrics"></div>
-        <i class="metrics-value"> <span class="metrics-udm">[μg/m³]</span></i>
-      </section>
-    
-      <section class="d-flex flex-row item-card rounded-3">
-        <h3 class="title-metrics">PM10</h3>
-        <div class="divider-metrics"></div>
-        <i class="metrics-value"> <span class="metrics-udm">[μg/m³]</span></i>
-      </section>
-
-  </div>
-<!-- END METRICHE -->
-
-
-<!-- form -->
-<div class="container-form py-3">
-  <div class="col-sm-12 col-md-8 col-lg-6">
-    <h2>Load file</h2>
-    <div class="form-api d-flex flex-column rounded-3 p-3">
-      <label for="formFile" class="form-label mb-2 text-primary">Seleziona file</label>
-      <input class="form-control mb-3" type="file" id="formFile">
-      <div class="d-flex justify-content-end">
-        <button class="btn btn-outline-primary px-3" type="submit">Carica</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- end form -->
-
-
-
-
-
-    </div>
+  <section id="main-section" class="flex-grow-1 p-4">
+  
   </section>
 
 
