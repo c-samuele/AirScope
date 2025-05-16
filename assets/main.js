@@ -1,5 +1,5 @@
 
-const version = "v0.0.4";
+const version = "v0.0.5";
 const versionElements = document.querySelectorAll(".version-number");
 
 for (const el of versionElements) {

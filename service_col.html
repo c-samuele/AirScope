@@ -9,40 +9,6 @@
     <link rel="stylesheet" href="assets/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/style.css">
 </head>
-<style>
-.container-metrics {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 colonne */
-  grid-auto-rows: auto;
-  gap: 1rem;
-}
-.container-form {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-rows: auto;
-  gap: 1rem;
-}
-.form-control[type=file]{
-color: var(--color-text-default);}
-
-@media screen and (max-width: 1200px){
-  .container-metrics {
-    grid-template-columns: repeat(3, 1fr); /* 2 colonne per schermi piccoli */
-  }
-  
-}
-@media screen and (max-width: 700px){
-  .container-metrics {
-    grid-template-columns: repeat(2, 1fr); /* 2 colonne per schermi piccoli */
-  }}
-@media screen and (max-width: 600px){
-  .container-metrics {
-    grid-template-columns: repeat(1, 1fr); /* 2 colonne per schermi piccoli */
-  }
-  
-}
-
-</style>
 
 <body class="bg-service" >
 
@@ -70,7 +36,6 @@ color: var(--color-text-default);}
       </div>
     </a>
 </div>
-
     <hr>
 
     <ul id="menu-nav" class="nav nav-pills flex-column">
@@ -111,61 +76,69 @@ color: var(--color-text-default);}
 
     <!-- TITOLO -->
       <div class="col-12 mb-3">
-        <h1>Average air quality</h1>
+        <h2>Qualità dell'aria della Regione Marche</h2>
       </div>
     <!-- END TITOLO -->
 
     <!-- METRICHE -->
-   <div class="container-metrics">
-    
+   <div class="row g-3">
+    <div class="col">
       <section class="d-flex flex-row item-card rounded-3">
         <h3 class="title-metrics">CO</h3>
         <div class="divider-metrics"></div>
         <i class="metrics-value"> <span class="metrics-udm">[mg/m³]</span></i>
       </section>
-      
+    </div>
+
+    <div class="col">
       <section class="d-flex flex-row item-card rounded-3">
         <h3 class="title-metrics">NO2</h3>
         <div class="divider-metrics"></div>
         <i class="metrics-value"> <span class="metrics-udm">[μg/m³]</span></i>
       </section>
-    
+    </div>
+
+    <div class="col">
       <section class="d-flex flex-row item-card rounded-3">
         <h3 class="title-metrics">NOx</h3>
         <div class="divider-metrics"></div>
         <i class="metrics-value"> <span class="metrics-udm">[μg/m³]</span></i>
       </section>
-    
+    </div>
+
+    <div class="col">
       <section class="d-flex flex-row item-card rounded-3">
         <h3 class="title-metrics">O3</h3>
         <div class="divider-metrics"></div>
         <i class="metrics-value"> <span class="metrics-udm">[μg/m³]</span></i>
       </section>
-    
+    </div>
+
+    <div class="col">
       <section class="d-flex flex-row item-card rounded-3">
         <h3 class="title-metrics">PM10</h3>
         <div class="divider-metrics"></div>
         <i class="metrics-value"> <span class="metrics-udm">[μg/m³]</span></i>
       </section>
+    </div>
+
+<!-- form -->
+ <div class="col-5">
+  <h1>Load file</h1>
+  <div class="form-api d-flex flex-column rounded-3 p-3">
+    <label for="formFile" class="form-label mb-2 text-primary">Seleziona file</label>
+    <input class="form-control mb-3" type="file" id="formFile">
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-outline-primary px-3" type="submit">Carica</button>
+    </div>
+  </div>
+</div>
+
+<!-- end form -->
 
   </div>
 <!-- END METRICHE -->
 
-
-<!-- form -->
-<div class="container-form py-3">
-  <div class="col-sm-12 col-md-8 col-lg-6">
-    <h2>Load file</h2>
-    <div class="form-api d-flex flex-column rounded-3 p-3">
-      <label for="formFile" class="form-label mb-2 text-primary">Seleziona file</label>
-      <input class="form-control mb-3" type="file" id="formFile">
-      <div class="d-flex justify-content-end">
-        <button class="btn btn-outline-primary px-3" type="submit">Carica</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- end form -->
 
 
 

@@ -2,8 +2,8 @@
 --bg-dark: #212529;
 --color-i-constrast: #6a6a6a;
 --color-text-default:#ececec;
---bs-tertiary-bg-rgb: 43, 48, 53;
 --bs-border-color: #495057;
+--bs-tertiary-bg-rgb: 43, 48, 53;
 }
 
 *{
@@ -14,9 +14,11 @@
 
 h1{
 color:var(--color-text-default);
+font-size: 1.6em;
 }
 h2{
 color:var(--color-text-default);
+font-size: 1.6em;
 }
 
 
@@ -122,7 +124,7 @@ border: 1px solid var(--bs-border-color) !important;
   font-size: 1em;
 }
 
-@media screen and (max-width: 768px){
+@media screen and (max-width: 850px){
   .li-menu-desktop{
     display: none;
   }
@@ -139,9 +141,13 @@ border: 1px solid var(--bs-border-color) !important;
 }
 
 
+/* COMPONENTE CARICA FILE */
 
-/* Stile del form generale */
-
+/* Override dello stile default bootstrap */
+.form-control[type=file]{
+  background-color: transparent!important;
+}
+/* stile del form box */
 .form-api{
   background-color: rgba(var(--bs-tertiary-bg-rgb), 1);
   border: 1px solid var(--bs-border-color) !important;
