@@ -97,7 +97,7 @@ document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
         container.innerHTML = `
           <div class="container-fluid">
             <h1>request</h1>
-            <p>Contenuto della terza vista.</p>
+            <p>GET,POST,PUT,DELETE,GET->List</p>
           </div>`;
         break;
     }

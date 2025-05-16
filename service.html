@@ -13,9 +13,11 @@
 <body class="bg-service" >
 
 <main class="d-flex flex-nowrap min-vh-100">
+    <!-- Menu -->
     <nav class="menu-side d-flex flex-column flex-shrink-0 p-3 text-bg-dark">
     <div class="d-flex justify-content-center">
       <a href="index.html" class="d-flex align-items-center mb-3 text-white text-decoration-none">
+        <!-- logo svg -->
         <svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" class="d-block mx-auto mb-2 svg-icon" alt="home"  height="48" 
         viewBox="0 0 283.5 283.5" style="enable-background:new 0 0 283.5 283.5;" xml:space="preserve">
         <g>
@@ -29,15 +31,18 @@
           </g>
         </g>
         </svg>
+
       <div class="version-desktop-menu px-3">
+        <!-- Title -->
         <span class="title">AirScope<br>
+        <!-- Version -->  
         <span class="version-number"></span></span>
       </div>
     </a>
 </div>
 
     <hr>
-
+    <!-- menu btn section -->
     <ul id="menu-nav" class="nav nav-pills flex-column">
       <li class="nav-item">
         <a id="dashboard-btn" href="#" class="nav-link text-white active" aria-current="page">
@@ -62,7 +67,7 @@
     </ul>
 
     <hr>
-
+    <!-- menu > footer > version -->
     <div class="version">
         <i>Version GUI <span class="version-number"></span></i>
     </div>  
@@ -81,5 +86,13 @@
 
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/main.js" defer></script>
+
+  <!-- Genero la dashboard al caricamento della pagina -->
+   <script>
+      window.addEventListener("DOMContentLoaded", () => { 
+          contentGenerate("dashboard");
+      });
+  </script>
+
 </body>
 </html>

@@ -13,8 +13,9 @@
 
    <main class="min-vh-100 d-flex flex-column justify-content-between">
     <div class="px-4 py-5 text-center bg-dark my-auto">
-       <svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" fill="white" width="330px"
-	 viewBox="0 0 127.6 42.5" style="enable-background:new 0 0 127.6 42.5;" xml:space="preserve">
+        <!-- logo svg -->
+        <svg version="1.1" id="Livello_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" fill="white" width="330px"
+        viewBox="0 0 127.6 42.5" style="enable-background:new 0 0 127.6 42.5;" xml:space="preserve">
             <g>
                 <g>
                     <g>
@@ -48,13 +49,13 @@
                     c-0.1-1-0.3-1.7-0.9-2.2c-0.5-0.5-1.2-0.7-1.9-0.7c-0.8,0-1.5,0.3-1.9,0.8c-0.5,0.5-0.8,1.2-0.9,2.1H116.4z"/>
             </g>
         </svg>
-
+        <!-- versione -->
         <span class="version-number"></span>
         
-
         <div class="col-lg-6 mx-auto">
+            <!-- Aforisma -->
             <div id="aphorism" class="lead text-light mb-4"></div>
-
+            <!-- Ingresso btn -->
             <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
                 <button id="enter" type="button" class="btn btn-primary btn-lg px-4 gap-3">Enter</button>
                 <button type="button" class="btn btn-outline-secondary btn-lg px-4">Info</button>
@@ -62,17 +63,15 @@
         </div>
     </div>
 
+    <!-- footer -->
     <div class="py-4 text-center divider">
         <i class="author-signature">Created by Samuele Caporale</i>
     </div>
+
 </main>
-<script>
-        document.getElementById("enter").addEventListener("click", function() {
-        window.location.href = "service.html";
-        });
-</script>
     <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="assets/af.js"></script>
     <script src="assets/main.js" defer></script>
+    <script src="assets/index.js"></script>
 </body>
 </html>

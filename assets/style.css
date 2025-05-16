@@ -142,9 +142,11 @@ border: 1px solid var(--bs-border-color) !important;
   .icon-menu{
   font-size:1.35em;
   }
+  .divider-a{
+    width: 0.1rem;
+  }
 
 }
-
 
 /* COMPONENTE CARICA FILE */
 
@@ -176,17 +178,16 @@ color: var(--color-text-default);}
 
 @media screen and (max-width: 1200px){
   .container-metrics {
-    grid-template-columns: repeat(3, 1fr); /* 2 colonne per schermi piccoli */
+    grid-template-columns: repeat(3, 1fr); 
   }
-  
 }
 @media screen and (max-width: 700px){
   .container-metrics {
-    grid-template-columns: repeat(2, 1fr); /* 2 colonne per schermi piccoli */
+    grid-template-columns: repeat(2, 1fr); 
   }}
 @media screen and (max-width: 600px){
   .container-metrics {
-    grid-template-columns: repeat(1, 1fr); /* 2 colonne per schermi piccoli */
+    grid-template-columns: repeat(1, 1fr); 
   }
   
 }
