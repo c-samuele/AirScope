@@ -27,13 +27,12 @@ document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
       case "dashboard":
         container.innerHTML = `
 <div class="container-fluid">
-      <!-- TITOLO -->
+<!-- TITOLO -->
         <div class="col-12 mb-3">
           <h1>Average air quality</h1>
         </div>
-      <!-- END TITOLO -->
 
-      <!-- METRICHE -->
+<!-- METRICHE -->
     <div class="container-metrics">
       
         <section class="d-flex flex-row item-card rounded-3">
@@ -65,25 +64,7 @@ document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
           <div class="divider-metrics"></div>
           <i class="metrics-value"> <span class="metrics-udm">[μg/m³]</span></i>
         </section>
-
     </div>
-  <!-- END METRICHE -->
-
-  <!-- form -->
-  <div class="container-form py-3">
-    <div class="col-sm-12 col-md-8 col-lg-6">
-      <h2>Load file</h2>
-      <div class="form-api d-flex flex-column rounded-3 p-3">
-        <label for="formFile" class="form-label mb-2 text-primary">Seleziona file</label>
-        <input class="form-control mb-3" type="file" id="formFile">
-        <div class="d-flex justify-content-end">
-          <button class="btn btn-outline-primary px-3" type="submit">Carica</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- end form -->
-
 </div>`;
         break;
       case "analitics":
@@ -96,8 +77,23 @@ document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
       case "request":
         container.innerHTML = `
           <div class="container-fluid">
-            <h1>request</h1>
-            <p>GET,POST,PUT,DELETE,GET->List</p>
+            <h1>REQUESTS</h1><i class="version">GET[],POST,PUT,DELETE</i>
+            
+<!-- form -->
+              <div class="container-form py-3">
+                <div class="col-sm-12 col-md-8 col-lg-6">
+                  <h2>GET</h2>
+                  <div class="form-api d-flex flex-column rounded-3 p-3">
+                    <label for="formFile" class="form-label mb-2 text-primary">Seleziona file</label>
+                    <input class="form-control mb-3" type="file" id="formFile">
+                    <div class="d-flex justify-content-end">
+                      <button class="btn btn-outline-primary px-3" type="submit">Carica</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+<!-- end form -->
           </div>`;
         break;
     }
