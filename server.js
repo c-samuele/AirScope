@@ -4,8 +4,8 @@ const app = express();
 
 app.use(express.json());
 
-// Serve i file dentro la cartella 'public'
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public')); // HTML/CSS/JS personalizzati
+app.use('/bootstrap', express.static('node_modules/bootstrap/dist')); //Bootstrap
 
 app.get('/', (req, res) => {
   res.send('Server attivo!');
