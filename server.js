@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Servire Bootstrap statico
-app.use('/bootstrap', express.static(path.join(__dirname, 'assets/bootstrap/dist')));
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 
 // Servire assets statici
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
