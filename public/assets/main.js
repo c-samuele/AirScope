@@ -77,12 +77,11 @@ document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
       case "request":
         container.innerHTML = `
           <div class="container-fluid">
-            <h1>REQUESTS</h1><i class="version">GET[],POST,PUT,DELETE</i>
-            
+            <h1>REQUESTS</h1>
 <!-- form -->
               <div class="container-form py-3">
                 <div class="col-sm-12 col-md-8 col-lg-6">
-                  <h2>GET</h2>
+                  <h2>POST</h2>
                   <div class="form-api d-flex flex-column rounded-3 p-3">
                     <label for="formFile" class="form-label mb-2 text-primary">Seleziona file</label>
                     <input class="form-control mb-3" type="file" id="formFile">
