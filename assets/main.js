@@ -87,7 +87,7 @@ function contentGenerate(type) {
       <form id="uploadForm" enctype="multipart/form-data">
         <div class="form-api d-flex flex-column rounded-3 p-3">
           <label for="formFile" class="form-label mb-2 text-primary">Seleziona file</label>
-          <input name="csvfile" class="form-control mb-3" type="file" id="formFile" required>
+          <input name="csvfile" class="form-control mb-3" type="file" id="formFile">
           <div class="d-flex justify-content-end">
             <button class="btn btn-outline-primary px-3" type="submit">Carica</button>
           </div>
@@ -95,8 +95,7 @@ function contentGenerate(type) {
       </form>
     </div>
   </div>
-</div>
-<div class="text-bg-primary" id="responseMsg"></div>`;
+</div>`;
 registerUploadListener();
     break;
     }

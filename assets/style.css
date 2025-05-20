@@ -191,3 +191,7 @@ color: var(--color-text-default);}
   }
   
 }
+
+#toast-container .toast {
+  margin-top: 10px;
+}

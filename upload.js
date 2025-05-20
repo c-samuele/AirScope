@@ -8,18 +8,22 @@ function registerUploadListener() {
   }
 
   form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    fetch('/upload', {
-      method: 'POST',
-      body: formData
-    })
-    .then(res => res.text())
-    .then(data => {
-      responseMsg.textContent = data;
-    })
-    .catch(() => {
-      responseMsg.textContent = 'Errore nel caricamento';
-    });
+  e.preventDefault();
+  const formData = new FormData(form);
+  fetch('/upload', {
+    method: 'POST',
+    body: formData
+  })
+  .then(res => {
+    if (res.ok) return res.text().then(data => ({ status: 'success', message: data }));
+    else return res.text().then(data => ({ status: 'error', message: data }));
+  })
+  .then(({ status, message }) => {
+    showToast(message, status);
+  })
+  .catch(() => {
+    showToast('Errore nel caricamento', 'error');
   });
+});
+
 }
