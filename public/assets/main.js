@@ -83,14 +83,14 @@ document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
                 <div class="col-sm-12 col-md-8 col-lg-6">
                   <h2>POST</h2>
                   <div class="form-api d-flex flex-column rounded-3 p-3">
-                    <label for="formFile" class="form-label mb-2 text-primary">Seleziona file</label>
-                    <input class="form-control mb-3" type="file" id="formFile">
-                    <div class="d-flex justify-content-end">
-                      <button class="btn btn-outline-primary px-3" type="submit">Carica</button>
-                    </div>
+                      <form action="/upload" method="POST" enctype="multipart/form-data">
+                          <input class="form-control mb-3" type="file" name="file" />
+                          <button class="btn btn-outline-primary px-3" type="submit">Carica</button>
+                      </form>
                   </div>
                 </div>
               </div>
+              
 
 <!-- end form -->
           </div>`;
