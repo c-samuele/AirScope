@@ -70,14 +70,12 @@ document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
       case "analitics":
         container.innerHTML = `
           <div class="container-fluid">
-            <h1>analitics</h1>
             <p>Infographics,avg,table</p>
           </div>`;
         break;
       case "request":
         container.innerHTML = `
           <div class="container-fluid">
-            <h1>REQUESTS</h1>
 <!-- form -->
               <div class="container-form py-3">
                 <div class="col-sm-12 col-md-8 col-lg-6">
