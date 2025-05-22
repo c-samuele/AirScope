@@ -30,10 +30,17 @@ const storage = multer.diskStorage({
 // Creo l'oggetto multer con la configurazione storage sopra
 const upload = multer({ storage: storage });
 
+////////////////////////////////////
+//      *****  ****  **** *****   //
+//      *    * *  * *       *     //
+//      *****  *  *  ***    *     //  
+//      *      *  *     *   *     //
+//      *      ****  ****   *     //
+////////////////////////////////////
 // Route POST per ricevere il file caricato
 app.post('/upload', upload.single('file'), (req, res) => {
   // req.file contiene tutte le info del file caricato e salvato
-  console.log(req.file);
+  // console.log(req.file);
 
   // Rispondo al client che il file è stato salvato
   res.send('File salvato sul server!');
@@ -44,20 +51,6 @@ app.post('/upload', upload.single('file'), (req, res) => {
 app.get('/public/assets', (req, res) => {
   res.send('Server attivo!');
 });
-
-////////////////////////////////////
-//      *****  ****  **** *****   //
-//      *    * *  * *       *     //
-//      *****  *  *  ***    *     //  
-//      *      *  *     *   *     //
-//      *      ****  ****   *     //
-////////////////////////////////////////////////////////////////
-// carico il file del form con name="file"                    //
-app.post('/upload', upload.single('file'), (req, res) => {    //
-  // console.log(req.file); // log di terminale con il file      // 
-  res.send('File ricevuto!');// mando la risposta al client   //
-});                                                           //
-////////////////////////////////////////////////////////////////
 
 
 app.listen(3000, () => {
