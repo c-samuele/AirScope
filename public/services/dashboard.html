@@ -45,8 +45,12 @@
         <p class="card-text">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus, recusandae culpa fugiat vel optio commodi.</p>
         <a href="#" class="btn m-3 btn-primary">Vai al Caricamento</a>
       </div>
-      <div class="card-footer text-light">ora</div>
+      <div id="data" class="card-footer text-light"></div>
     </div>
   </section>
 
 </div>
+
+<script>
+  document.getElementById('data').textContent = new Date().toLocaleDateString();
+</script>

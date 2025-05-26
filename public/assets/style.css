@@ -53,7 +53,7 @@ h2{
 }
 
 .menu-side{
-  width: 280px;
+  width: 250px;
   height: auto;
 }
 
@@ -155,7 +155,14 @@ hr{
   font-size: 1em;
 }
 
+.menu-side a object {
+  pointer-events: none;
+}
+
 @media screen and (max-width: 850px){
+  #logo-desktop{
+    display: none;
+  }
   .li-menu-desktop{
     display: none;
   }
@@ -171,7 +178,12 @@ hr{
   .divider-a{
     width: 0.1rem;
   }
+}
 
+@media screen and (min-width: 850px){
+  #logo-mobile{
+    display: none;
+  }
 }
 
 /* COMPONENTE CARICA FILE */
@@ -254,6 +266,10 @@ color: var(--color-text-default);}
     padding:0 0 16px 0;
   }
   
+}
+
+#data{
+  color: var(--color-i-constrast)!important;
 }
 
 #myChart {

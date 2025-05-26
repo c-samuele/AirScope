@@ -1,5 +1,5 @@
 // Versione GUI --------------------------------------------------------------|
-const version = "v0.0.7";
+const version = "v0.0.8";
 const versionElements = document.querySelectorAll(".version-number");
 
 for (const el of versionElements) {
@@ -60,7 +60,7 @@ switch(type) {
           labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
           datasets: [{
             label: '# Qualità Aria',
-            data: [5, 10, 22, 5, 21, 32],
+            data: [5, 43, 22, 5, 21, 12],
             borderWidth: 1
             }]
           },
