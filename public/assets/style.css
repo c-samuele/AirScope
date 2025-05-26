@@ -4,6 +4,7 @@
 --color-text-default:#ececec;
 --bs-border-color: #495057;
 --bs-tertiary-bg-rgb: 43, 48, 53;
+--tcolor-placeholder:rgb(17, 109, 248);
 }
 
 *{
@@ -166,6 +167,24 @@ hr{
 
 /* COMPONENTE CARICA FILE */
 
+/* Colore del placeholder testuale */
+.form-api input::placeholder{
+  color: var(--tcolor-placeholder);
+}
+.form-api input:-ms-input-placeholder { /* Internet Explorer */
+  color: var(--tcolor-placeholder);
+}
+.form-api input::-ms-input-placeholder { /* Microsoft Edge */
+  color: var(--tcolor-placeholder);
+}
+
+.info-data{
+  font-size:0.9em;
+  padding:0 16px 0 0;
+  color: var(--color-i-constrast);
+}
+
+
 /* Override dello stile default bootstrap */
 .form-control[type=file]{
   background-color: transparent!important;
@@ -206,5 +225,20 @@ color: var(--color-text-default);}
   .container-metrics {
     grid-template-columns: repeat(1, 1fr); 
   }
+  /* sposto il bottone carica in riga versione desktop->mobile */
+  .layout-dsk-mobile{
+    flex-direction: column!important;
+  }
+  /* aggiorno anche il padding del bottone carica */
+  .info-data{
+    font-size:0.8em;
+    padding:0 0 16px 0;
+  }
   
+}
+
+
+#myChart {
+  width: 100% !important;
+  height: 400px !important;
 }
