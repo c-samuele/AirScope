@@ -56,45 +56,60 @@ app.post('/upload', upload.single('file'), (req, res) => {
   // console.log('Percorso file:', csvFilePath);
   // ---------------------------------|
 
-
-  const records = [];
-  fs.createReadStream(csvFilePath)
-    // columns: true <- prima riga legenda.
-    .pipe(csvParse.parse({ columns: true, trim: true }))
-    .on('data', function(row) {
-      records.push(row);
+  const records = [];     // variabile di salvataggio oggetti convertiti
+  fs.createReadStream(csvFilePath)  // stream di lettura sul file csv
+    .pipe(csvParse.parse({ columns: true, trim: true }))    // columns:prima riga ignorata(legenda). trim:rimuove spazi iniziali/finali
+    .on('data', function(row) {     // per ogni riga del csv 
+      records.push(row);            // aggiungo a records la riga 
     })
-    .on('end', function() {
-      console.log('CSV trasformato in oggetti:');
-      console.log(records.slice(0, 2));
+    .on('end', function() {         // al termine dello stream
+      //LOG di DEBUG --------------------------------|
+      // console.log('CSV trasformato in oggetti:');
+      // console.log(records.slice(0, 2)); 
+      // --------------------------------------------|
+      const csvFileName = req.file.filename;                        // estrazione del nome file
+      const jsonFileName = csvFileName.replace(/\.csv$/i, '.json'); // rinomino l'estensione del file
 
-      const csvFileName = req.file.filename;
-      const jsonFileName = csvFileName.replace(/\.csv$/i, '.json');
-
+      // Oggetto da Salvare -------------------------|
       const outputObject = {
-        citta: citta,
+        citta: citta, 
         ente: ente,
         data_caricamento: new Date().toISOString(),
         fileJson: jsonFileName,
         dati: records
       };
-
+      // --------------------------------------------|
+      
+      // Percorso di salvataggio file caricato
       const outputPath = path.join(__dirname, 'upload', jsonFileName);
 
+      // Salvo come oggetto JSON con 2 spazi
       fs.writeFile(outputPath, JSON.stringify(outputObject, null, 2), (err) => {
-        if (err) {
-          console.error('Errore nel salvataggio JSON:', err);
-          return res.status(500).send('Errore nel salvataggio del JSON.');
+        if (err) {  // in caso di errore stampo la risposta catturata
+          console.error('Errore nel salvataggio del file JSON:', err); // DEBUG
+          return res.status(500).send('Errore nel salvataggio del file JSON.');
         }
+      // CANCELLO IL FILE CSV da Update
+      fs.unlink(csvFilePath, (err) => {
+        if (err) console.warn('Errore nella rimozione del file CSV:', err);
+        else console.log('File CSV rimosso:', csvFilePath);
+      });
+
+        // Log Sucess Upload
         console.log('File JSON salvato:', outputPath);
         res.send('File JSON creato correttamente!');
       });
-    })
+    }) // END STREAM
+
+    // Errore Del Parsing nello Stream
     .on('error', function(err) {
       console.error('Errore nel parsing:', err);
       res.status(500).send('Errore nel parsing del CSV.');
     });
 });
+
+
+
 
 // END REQUEST ------------------------------------------------------------------|
     

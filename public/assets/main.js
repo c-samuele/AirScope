@@ -33,6 +33,7 @@ function contentGenerate(type) {
   
 switch(type) {
   case "dashboard":
+    // Uso JQuery per caricare il contenuto
     container.load("services/dashboard.html", () => {
       // Aggiorno i dati sul client dal server
       fetch('http://localhost:3000/api/values_avg')
@@ -49,7 +50,9 @@ switch(type) {
   break;
 
   case "analitics":
+    // Uso JQuery per caricare il contenuto
     container.load("services/analytics.html", () => {
+      // Inizializzo il grafico 
       const ctx = $('#myChart');
       new Chart(ctx, {
         type: 'bar',
@@ -75,6 +78,7 @@ switch(type) {
   case "request":
      // Uso JQuery per caricare il contenuto
     container.load("services/request.html", () => {
+      // Ascoltatore per il submit del form
       document.getElementById('form-send').addEventListener('submit', async (e) => {
         // Blocco per gestirlo via AJAX
         e.preventDefault();

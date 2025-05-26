@@ -13,6 +13,16 @@
   padding: 0;
 }
 
+/* INDEX *****************************/
+.img-sky{
+  background-image: url(./img/blue_sky.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+/* END INDEX *************************/
+
 h1{
   color:var(--color-text-default);
   font-size: 1.6em;
@@ -185,7 +195,7 @@ hr{
 }
 
 
-/* Override dello stile default bootstrap */
+/* FORM di bootstrap modificato */
 .form-control[type=file]{
   background-color: transparent!important;
 }
@@ -195,6 +205,16 @@ hr{
   border: 1px solid var(--bs-border-color) !important;
   width:100% ;
 }
+
+/* ZONA FILE LIST ************************************/
+.file-list{
+
+}
+.file-item{
+background-color: red;
+}
+
+/* END ZONA FILE LIST ********************************/
 
 
 .container-metrics {
@@ -236,7 +256,6 @@ color: var(--color-text-default);}
   }
   
 }
-
 
 #myChart {
   width: 100% !important;
