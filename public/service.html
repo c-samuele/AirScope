@@ -69,14 +69,16 @@
 
 
 </main>
+<!-- Genero la dashboard al caricamento della pagina -->
+   
     <script src="/jquery/jquery.min.js"></script>
     <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/chart/chart.umd.js"></script>
     <!-- <script src="/assets/toast.js"></script> -->
-    <script src="/assets/main.js" defer></script>
+    <script src="./assets/main.js"></script>
+    <script src="./assets/tableGenerate.js"></script>
 
-  <!-- Genero la dashboard al caricamento della pagina -->
-   <script>
+  <script>
       window.addEventListener("DOMContentLoaded", () => { 
           contentGenerate("dashboard");
       });

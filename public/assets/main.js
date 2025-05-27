@@ -1,5 +1,8 @@
-// Versione GUI --------------------------------------------------------------|
-const version = "v0.0.8";
+// funzione per popolare la tabella degli open data
+// import { tableGenerate } from './tableGenerate.js';
+
+// Versione --------------------------------------------------------------|
+const version = "v0.0.9";
 const versionElements = document.querySelectorAll(".version-number");
 
 for (const el of versionElements) {
@@ -73,6 +76,9 @@ switch(type) {
         }
       });
     });
+
+tableGenerate('../../upload/dacaricare.json');
+  
   break;
 
   case "request":

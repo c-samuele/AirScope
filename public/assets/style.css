@@ -282,3 +282,8 @@ color: var(--color-text-default);}
   border: 1px solid var(--bs-border-color) !important;
   width: 100%;
 }
+
+.table-section{
+    max-height: 400px;
+    overflow: scroll;
+}

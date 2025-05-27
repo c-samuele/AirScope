@@ -14,6 +14,7 @@ app.use(express.static('public'));     // direttiva file statici
 app.use('/jquery', express.static('node_modules/jquery/dist'));
 app.use('/chart', express.static('node_modules/chart.js/dist'));
 app.use('/bootstrap', express.static('node_modules/bootstrap/dist')); 
+app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
 // per inviare richieste con body json
 app.use(express.json());
