@@ -9,7 +9,7 @@ function tableGenerate(database) {  // file.json contenente open data
       dati.dati.forEach(item => {
         const tr = document.createElement('tr');
 
-        ['data_ora', 'CO', 'NO2', 'Nox', 'O3', 'PM10'].forEach(chiave => {
+        ['data','ora', 'CO', 'NO2', 'Nox', 'O3', 'PM10'].forEach(chiave => {
           const td = document.createElement('td');
           td.textContent = item[chiave];
           tr.appendChild(td);

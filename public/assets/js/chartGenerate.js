@@ -8,7 +8,7 @@ async function chartGenerate() {
   const jsonData = await response.json();
 
   const dataArray = jsonData.dati;
-  const labels = dataArray.map(item => item.data_ora);
+  const labels = dataArray.map(item => `${item.data} ${item.ora}`);
 
   const keys = ['CO', 'NO2', 'Nox', 'O3', 'PM10'];
 

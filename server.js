@@ -84,7 +84,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
       // Percorso di salvataggio file caricato
       const outputPath = path.join(__dirname, 'upload', jsonFileName);
 
-      // Salvo come oggetto JSON con 2 spazi
+      // Salvo come oggetto JSON
       fs.writeFile(outputPath, JSON.stringify(outputObject, null, 2), (err) => {
         if (err) {  // in caso di errore stampo la risposta catturata
           console.error('Errore nel salvataggio del file JSON:', err); 

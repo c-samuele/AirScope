@@ -12,16 +12,24 @@ const aphorisms = [
     author: "Albert Einstein"
   },
   {
-    text: "If I have seen further, it is by standing on the shoulders of giants.",
-    author: "Isaac Newton"
+    text: "The value of an idea lies in its usage.",
+    author: "Thomas Edison"
+  },
+  {
+    text: "The best time of the day is now.",
+    author: "Pierre Bonnard"
   },
   {
     text: "Imagination is everything. It is the preview of life's coming attractions.",
     author: "Albert Einstein"
   },
   {
-    text: "The heart has its reasons which reason knows not.",
-    author: "Blaise Pascal"
+    text: "Dont' find fault, find a remedy.",
+    author: "Henry Ford"
+  },
+  {
+    text: "When you lose, don't lose the lesson.",
+    author: "Dalai Lama"
   },
   {
     text: "Most people overestimate what they can do in one year and underestimate what they can do in ten years.",
