@@ -2,7 +2,7 @@
 // import { tableGenerate } from './tableGenerate.js';
 
 // Versione --------------------------------------------------------------|
-const version = "v0.0.9";
+const version = "v0.1.4";
 const versionElements = document.querySelectorAll(".version-number");
 
 for (const el of versionElements) {
@@ -35,11 +35,13 @@ function contentGenerate(type) {
   const container = $("#main-section");
   
 switch(type) {
+
+  // SERVIZIO DASHBOARD
   case "dashboard":
     // Uso JQuery per caricare il contenuto
     container.load("services/dashboard.html", () => {
       // Aggiorno i dati sul client dal server
-      fetch('http://localhost:3000/api/values_avg')
+      fetch('http://localhost:3000/api/data_avg')
         .then(res => res.json())
         .then(data => {
           $('#val-co').text(data.CO);
@@ -49,38 +51,22 @@ switch(type) {
           $('#val-pm10').text(data.PM10);
         })
         .catch(e => console.error(e));
-    });
+    });     
   break;
 
+  // ASERVIZIO ANALISI
   case "analitics":
-    // Uso JQuery per caricare il contenuto
+    // Funzione per caricare il contenuto html del servizio con JQuery
     container.load("services/analytics.html", () => {
-      // Inizializzo il grafico 
-      const ctx = $('#myChart');
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-          datasets: [{
-            label: '# Qualità Aria',
-            data: [5, 43, 22, 5, 21, 12],
-            borderWidth: 1
-            }]
-          },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: { beginAtZero: true }
-          }
-        }
-      });
+      // Funzione per generare il grafico
+      chartGenerate();
+      
+      // Funzione per popolare la tabella con i valori del database
+      tableGenerate('../../upload/dacaricare.json');
     });
-
-tableGenerate('../../upload/dacaricare.json');
-  
   break;
 
+  // SERVIZIO RICHIESTA
   case "request":
      // Uso JQuery per caricare il contenuto
     container.load("services/request.html", () => {

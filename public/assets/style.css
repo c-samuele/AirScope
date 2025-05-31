@@ -140,6 +140,11 @@ hr{
   color: rgb(4, 241, 4);
 }
 
+.feature-icon{
+  border-radius: var(--bs-card-inner-border-radius);
+  padding: 4px 8px;
+}
+
 
 .divider-metrics{
   background-color:var(--bs-border-color);
@@ -272,7 +277,7 @@ color: var(--color-text-default);}
   color: var(--color-i-constrast)!important;
 }
 
-#myChart {
+#chartAvg {
   width: 100% !important;
   height: 400px !important;
 }
@@ -286,4 +291,10 @@ color: var(--color-text-default);}
 .table-section{
     max-height: 400px;
     overflow: scroll;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
