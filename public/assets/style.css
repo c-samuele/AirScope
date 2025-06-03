@@ -4,7 +4,7 @@
 --color-text-default:#ececec;
 --bs-border-color: #495057;
 --bs-tertiary-bg-rgb: 43, 48, 53;
---tcolor-placeholder:rgb(17, 109, 248);
+--tcolor-placeholder:white;
 }
 
 *{
@@ -204,6 +204,11 @@ hr{
   color: var(--tcolor-placeholder);
 }
 
+input[type="date"]::placeholder,
+input[type="time"]::placeholder {
+  color: var(--tcolor-placeholder);
+}
+
 .info-data{
   font-size:0.9em;
   padding:0 16px 0 0;
@@ -297,4 +302,13 @@ thead th {
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+
+/* MediaQuery per form modifica */
+
+@media screen and (max-width:991px){
+  #form-mod{
+    margin-top:1rem!important;
+  }
 }

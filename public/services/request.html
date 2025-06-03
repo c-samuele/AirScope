@@ -2,10 +2,11 @@
 
 <!---------------------- CARICAMENTO OPEN DATA FORM ---------------------->
 <div class="container-form">
-    <div class="col-12">
-        <h2>Load Open Data</h2>
-        <div class="form-api d-flex flex-column rounded-3 p-3">
-            <!---------------------- FORM ---------------------->
+    <!---------------------- FORM di caricamento ---------------------->
+<div class="row">
+    <div class="col-lg-5 col-md-12">
+        <h2>Carica Open data</h2>
+        <div class="form-api d-flex flex-column rounded-3 p-3">        
             <form id="form-send" action="/upload" method="POST" enctype="multipart/form-data">
                 <input type="text" class="form-control text-white bg-transparent mb-3" name="citta" placeholder="Città" required>
                 <input type="text" class="form-control text-white bg-transparent mb-3" name="ente" placeholder="Ente" required>
@@ -15,9 +16,57 @@
                     <button class="btn btn-outline-primary px-3" type="submit">Carica</button>
                 </div>
             </form>
-            <!---------------------- END FORM ---------------------->
+            
         </div>
     </div>
+    <!---------------------- END ---------------------->
+
+    <!---------------------- FORM di aggiunta item ---------------------->
+    <div id="form-mod" class="col-lg-7 col-md-12">
+        <h2>Aggiungi misurazione</h2>
+        <div class="form-api d-flex flex-column rounded-3 p-3">
+            <form id="form-mod" action="/api/create" method="POST">
+                <section class="d-flex flex-row w-100">
+                    <div class="me-3 flex-grow-1">
+                        <label for="date-m" class="form-label text-light">Data</label>
+                        <input name="data" id="date-m" type="date" class="form-control text-white bg-transparent mb-3 me-3" required>
+                    </div>
+                    <div class="flex-grow-1">
+                        <label for="time-m" class="form-label text-light">Ora</label>
+                        <input name="ora" id="time-m" type="time" class="form-control text-white bg-transparent mb-3" required>
+                    </div>
+                </section>
+                <section class="d-flex flex-row">
+                    <div class="me-3">
+                        <label for="co-metrics" class="form-label text-light">CO</label>
+                        <input name="co" id="co-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01" required>    
+                    </div>
+                     <div class="me-3">
+                        <label for="no2-metrics" class="form-label text-light">NO2</label>
+                        <input name="no2" id="no2-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01" required>    
+                    </div>
+                    <div class="me-3">
+                        <label for="nox-metrics" class="form-label text-light">NOx</label>
+                        <input name="nox" id="nox-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01" required>    
+                    </div>
+                    <div class="me-3">
+                        <label for="o3-metrics" class="form-label text-light">O3</label>
+                        <input name="o3" id="o3-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01" required>    
+                    </div>
+                    <div>
+                        <label for="pm10-metrics" class="form-label text-light">PM10</label>
+                        <input name="pm10" id="pm10-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01" required>    
+                    </div>
+                </section>
+                 <div class="layout-dsk-mobile d-flex flex-row justify-content-between">
+                    <i class="info-data"></i>
+                    <button class="btn btn-outline-primary px-3" type="submit">Aggiungi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!---------------------- END ---------------------->
+</div>
 
     <!-- LISTA DEI DATI JSON CARICATI -->
     <div id="file-list col-sm-12 col-md-12 col-lg-12">

@@ -10,7 +10,7 @@ async function chartGenerate() {
   const dataArray = jsonData.dati;
   const labels = dataArray.map(item => `${item.data} ${item.ora}`);
 
-  const keys = ['CO', 'NO2', 'Nox', 'O3', 'PM10'];
+  const keys = ['co', 'no2', 'nox', 'o3', 'pm10'];
 
   const datasets = keys.map(key => ({
     label: key,

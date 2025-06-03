@@ -2,7 +2,7 @@
 // import { tableGenerate } from './tableGenerate.js';
 
 // Versione --------------------------------------------------------------|
-const version = "v0.1.4";
+const version = "v0.1.5";
 const versionElements = document.querySelectorAll(".version-number");
 
 for (const el of versionElements) {
@@ -62,7 +62,8 @@ switch(type) {
   case "request":
      // Uso JQuery per caricare il contenuto
     container.load("services/request.html", () => {
-      // Ascoltatore per il submit del form
+
+      // Event Listener per il form carica file ------------------------- //
       document.getElementById('form-send').addEventListener('submit', async (e) => {
         // Blocco per gestirlo via AJAX
         e.preventDefault();
@@ -85,6 +86,36 @@ switch(type) {
           console.error('Errore nel caricamento:', err);
         }
       });
+      // end ----------------------------------------------------------- //
+
+      // Event Listener per il form aggiungi elemento ------------------ //
+      document.querySelector('#form-mod').addEventListener('submit', function (e) {
+
+      e.preventDefault(); // blocco il caricamento pagina
+
+      const form = e.target;
+
+      const newItem = {
+        data: form.data.value,
+        ora: form.ora.value,
+          co: form.co.value,
+         no2: form.no2.value,
+         nox: form.nox.value,
+          o3: form.o3.value,
+        pm10: form.pm10.value
+      };
+
+      fetch('/api/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newItem)
+      })
+      .then(res => res.json())
+      .then(data => alert(data.message))
+      .catch(err => alert('Errore: ' + err));
+      });
+      // end ----------------------------------------------------------- //
+
     });
     break;
     }

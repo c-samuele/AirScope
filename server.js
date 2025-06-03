@@ -4,17 +4,21 @@ const multer = require('multer');      // Middleware per gestire il caricamento 
 const path = require('path');          // Utility per lavorare con percorsi di file e directory
 const fs = require('fs');              // File System per lavorare con file e directory 
 const csvParse = require('csv-parse'); // Per convertire csv in json
+const { post } = require('jquery');
 
 const app = express();                 // Crea un'app Express
 const PORT = 3000;                     // Porta su cui il server ascolta
 
 app.use(express.static('public'));     // direttiva file statici
 
-// Framework ----------------------------------------------------------------|
+// Framework ------------------------------------------------------------------|
 app.use('/jquery', express.static('node_modules/jquery/dist'));
 app.use('/chart', express.static('node_modules/chart.js/dist'));
 app.use('/bootstrap', express.static('node_modules/bootstrap/dist')); 
 app.use('/upload', express.static(path.join(__dirname, 'upload')));
+
+// Script dev -----------------------------------------------------------------|
+const { normalizeDate, normalizeTime } = require('./utils/normalize.js');
 
 // per inviare richieste con body json
 app.use(express.json());
@@ -43,10 +47,12 @@ app.post('/upload', upload.single('file'), (req, res) => {
   // console.log('req.body:', req.body);
   // console.log('req.file:', req.file);
   // ---------------------------------|
+
+  // VERIFICA DEL CARICAMENTO
   if (!req.file) {
     return res.status(400).send('Nessun file caricato!');
   }
-  // dati da analizzare
+  // SALVATAGGIO Informazioni form Upload
   const citta = req.body.citta;
   const ente = req.body.ente;
   const csvFilePath = req.file.path;
@@ -59,9 +65,18 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
   const data = [];     // variabile di salvataggio oggetti convertiti
   fs.createReadStream(csvFilePath)  // stream di lettura sul file csv
+    // Converto in oggetto Js
     .pipe(csvParse.parse({ columns: true, trim: true }))    // columns:prima riga ignorata(legenda). trim:rimuove spazi iniziali/finali
+    // itero sugli eventi 'data' dati dallo stream del parse
     .on('data', function(row) {     // per ogni riga del csv 
-      data.push(row);            // aggiungo a data la riga 
+        // normalizzo la data
+        if (row.data) 
+          row.data = normalizeDate(row.data);
+        // normalizzo l'orario
+        if (row.ora) 
+          row.ora = normalizeTime(row.ora);
+      // aggiungo la data
+      data.push(row);
     })
     .on('end', function() {         // al termine dello stream
       //LOG di DEBUG --------------------------------|
@@ -108,6 +123,28 @@ app.post('/upload', upload.single('file'), (req, res) => {
     });
 });
 
+// Endpoint per aggiungere un nuovo elemento
+app.post('/api/create', (req, res) => {
+
+  const newItem = req.body;   // elemento da aggiungere
+
+  // Lettura db
+  fs.readFile('./upload/dacaricare.json', 'utf8', (err, data) => {
+    if (err) return res.status(500).json({ error: 'Errore lettura DB' });
+
+    // converto in oggetto js
+    const database = JSON.parse(data);
+
+    database.dati.push(newItem); // aggiungo l'elemento 
+
+    // scrivo le modifiche in json
+    fs.writeFile('./upload/dacaricare.json', JSON.stringify(database, null, 2), (err) => {
+      if (err) return res.status(500).json({ error: 'Errore scrittura DB' });
+      // risposta server sucess
+      res.status(200).json({ message: 'Dato aggiunto con successo!' });
+    });
+  });
+});
 
 
 
