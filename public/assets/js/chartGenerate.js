@@ -1,10 +1,10 @@
-async function chartGenerate() {
+async function chartGenerate(dataBase) {
 
   // Lavoro: elemento grafico html
   const chartAvg = $('#chartAvg');
 
 
-  const response = await fetch('/upload/data_chart');
+  const response = await fetch(dataBase);
   const jsonData = await response.json();
 
   const dataArray = jsonData.dati;

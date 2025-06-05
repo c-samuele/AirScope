@@ -1,15 +1,3 @@
-// funzione per popolare la tabella degli open data
-// import { tableGenerate } from './tableGenerate.js';
-
-// Versione --------------------------------------------------------------|
-const version = "v0.1.5";
-const versionElements = document.querySelectorAll(".version-number");
-
-for (const el of versionElements) {
-  el.textContent = version;
-}
-//----------------------------------------------------------------------------|
-
 // Gestione del menu con link attivo -----------------------------------------|
 document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
   link.addEventListener('click', function () {
@@ -51,10 +39,10 @@ switch(type) {
     // Funzione per caricare il contenuto html del servizio con JQuery
     container.load("services/analytics.html", () => {
       // Funzione per generare il grafico
-      chartGenerate();
+      chartGenerate('/upload/data');  
       
       // Funzione per popolare la tabella con i valori del database
-      tableGenerate('../../upload/dacaricare.json');
+      tableGenerate('/upload/data');
     });
   break;
 
@@ -89,7 +77,7 @@ switch(type) {
       // end ----------------------------------------------------------- //
 
       // Event Listener per il form aggiungi elemento ------------------ //
-      document.querySelector('#form-mod').addEventListener('submit', function (e) {
+      document.getElementById('form-mod').addEventListener('submit', function (e) {
 
       e.preventDefault(); // blocco il caricamento pagina
 
@@ -105,7 +93,7 @@ switch(type) {
         pm10: form.pm10.value
       };
 
-      fetch('/api/create', {
+      fetch('/newItem', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newItem)

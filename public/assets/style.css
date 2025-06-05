@@ -308,7 +308,7 @@ thead th {
 /* MediaQuery per form modifica */
 
 @media screen and (max-width:991px){
-  #form-mod{
+  .space-mobile{
     margin-top:1rem!important;
   }
 }

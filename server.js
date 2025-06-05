@@ -4,7 +4,6 @@ const multer = require('multer');      // Middleware per gestire il caricamento 
 const path = require('path');          // Utility per lavorare con percorsi di file e directory
 const fs = require('fs');              // File System per lavorare con file e directory 
 const csvParse = require('csv-parse'); // Per convertire csv in json
-const { post } = require('jquery');
 
 const app = express();                 // Crea un'app Express
 const PORT = 3000;                     // Porta su cui il server ascolta
@@ -12,15 +11,16 @@ const PORT = 3000;                     // Porta su cui il server ascolta
 app.use(express.static('public'));     // direttiva file statici
 
 // Framework ------------------------------------------------------------------|
-app.use('/jquery', express.static('node_modules/jquery/dist'));
-app.use('/chart', express.static('node_modules/chart.js/dist'));
-app.use('/bootstrap', express.static('node_modules/bootstrap/dist')); 
-app.use('/upload', express.static(path.join(__dirname, 'upload')));
 
-// Script dev -----------------------------------------------------------------|
+// __dirname è il path relativo alla posizione del server.js variabile globale di node.js
+app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
+app.use('/chart', express.static(path.join(__dirname, 'node_modules/chart.js/dist')));
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
+
+// Script -----------------------------------------------------------------|
 const { normalizeDate, normalizeTime } = require('./utils/normalize.js');
 
-// per inviare richieste con body json
+// per inviare richieste con body json ( non usato ancora )
 app.use(express.json());
 
 
@@ -40,7 +40,7 @@ const upload = multer({ storage: storage });
 
 
 // REQUEST --------------------------------------------------------------------|
-// Route POST per ricevere i file caricati
+// Endpoint POST per il caricamento file
 app.post('/upload', upload.single('file'), (req, res) => {
 
   // LOG DI DEBUG --------------------|
@@ -112,7 +112,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
       });
 
         console.log('File JSON salvato:', outputPath);
-        res.send('File JSON creato correttamente!');
+        res.type('text/plain').status(200).send('File JSON creato correttamente!');
       });
     }) // END STREAM
 
@@ -124,10 +124,10 @@ app.post('/upload', upload.single('file'), (req, res) => {
 });
 
 // Endpoint per aggiungere un nuovo elemento
-app.post('/api/create', (req, res) => {
-
+app.post('/newItem', (req, res) => {
+  
   const newItem = req.body;   // elemento da aggiungere
-
+  console.log('Nuovo item ricevuto:', newItem);
   // Lettura db
   fs.readFile('./upload/dacaricare.json', 'utf8', (err, data) => {
     if (err) return res.status(500).json({ error: 'Errore lettura DB' });
@@ -149,7 +149,49 @@ app.post('/api/create', (req, res) => {
 
 
 // END REQUEST ------------------------------------------------------------------|
-    
+
+// DASHBOARD --------------------------------------------------------------------|
+// Data AVG
+app.get('/api/data_avg', (req, res) => {
+  fs.readFile('./upload/database.json', 'utf8', (err, data) => {
+    if (err) {
+      res.status(500).json({ error: 'Errore nel leggere il file' });
+      return;
+    }
+    const valori = JSON.parse(data);
+    res.json(valori);
+  });
+});
+
+// END DASHBOARD ----------------------------------------------------------------|
+
+// ANALISI --------------------------------------------------------------------|
+
+const DATA_PATH = './upload/dacaricare.json'; // PATH di salvataggio dati
+
+// Endpoint GET leggere i dati (TABELLA & GRAFICO)
+app.get('/upload/data', (req, res) => {
+
+  // poichè sync è bloccante
+  try{
+    // Legge il contenuto del file come stringa 
+    const data = fs.readFileSync(DATA_PATH);
+    res.type('application/json').status(200).send(data); // converto la stringa letta in oggetto Json
+  }catch(error){
+    console.log("Errore lettura: "+ error);
+    res.type('text/plain').status(500).send("Errore nella lettura del file");
+  }
+});
+
+// END ANALISI ----------------------------------------------------------------|
+
+
+app.listen(3000, () => {
+  console.log(`Server in ascolto su http://localhost:${PORT}`);
+});
+
+
+
 // esempi a lezione
   // Endpoint GET con parametro URL (route param)
   app.get('/doc/:nome', (req, res) => {
@@ -176,42 +218,3 @@ app.post('/api/create', (req, res) => {
     console.log("POST route body");
     res.type('text/plain').send('Hello ' + req.body.nome);
   });
-
-
-// DASHBOARD --------------------------------------------------------------------|
-// Data AVG
-app.get('/api/data_avg', (req, res) => {
-  fs.readFile('./upload/database.json', 'utf8', (err, data) => {
-    if (err) {
-      res.status(500).json({ error: 'Errore nel leggere il file' });
-      return;
-    }
-    const valori = JSON.parse(data);
-    res.json(valori);
-  });
-});
-
-// END DASHBOARD ----------------------------------------------------------------|
-
-// ANALISI --------------------------------------------------------------------|
-// Endpoint GET per il chart
-app.get('/upload/data_chart', (req, res) => {
-
-  // poichè sync è bloccante
-  try{
-    // Legge il contenuto del file come stringa 
-    const data = fs.readFileSync('./upload/dacaricare.json');
-    res.type('application/json').status(200).send(data); // converto la stringa letta in oggetto Json
-  }catch(e){
-    console.log("Errore lettura: "+ e);
-    res.type('text/plain').status(500).send("Errore nella lettura del file");
-  }
-});
-
-// END ANALISI ----------------------------------------------------------------|
-
-
-app.listen(3000, () => {
-  console.log(`Server in ascolto su http://localhost:${PORT}`);
-});
-
