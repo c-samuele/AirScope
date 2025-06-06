@@ -1,12 +1,21 @@
 // funzione per calcolare i valori medi
-function avgMetricsGenerate (database){
+function avgMetricsGenerate (database){ // Endpoint per i dati
 
+  // valori medi
   let avgValue = {
       "co":0,
      "no2":0,
      "nox":0,
       "o3":0,
     "pm10":0
+  }
+  // valori massimi
+  let maxValue = {
+      "co":10,
+     "no2":40,
+     "nox":100,
+      "o3":120,
+    "pm10":50
   }
 
     fetch(database)
@@ -36,6 +45,21 @@ function avgMetricsGenerate (database){
           $('#val-nox').text(avgValue.nox.toFixed(3));
           $('#val-o3').text(avgValue.o3.toFixed(3));
           $('#val-pm10').text(avgValue.pm10.toFixed(3));
+
+          // controllo se supera i massimali
+          for(let key in avgValue){
+
+            let id = `#val-${key}`; // id di ogni elemento
+
+            if(avgValue[key] >= maxValue[key]){
+              console.log(`superato il massimale di:${avgValue[key]}`);
+              $(id).addClass("text-danger");
+            }
+            else{    
+              console.log(`Valore sotto la soglia critica:${avgValue[key]}`);
+            }
+          }        
+
         })
         .catch(e => console.error(e));
 }
