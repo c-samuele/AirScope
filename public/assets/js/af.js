@@ -4,6 +4,10 @@ const aphorisms = [
     author: "Ludwig Mies van der Rohe"
   },
   {
+    text: "The question is, can we change our course in time?",
+    author: "Leonardo Wilhelm DiCaprio"
+  },
+  {
     text: "Measure what is measurable, and make measurable what is not so.",
     author: "Galileo Galilei"
   },
@@ -26,14 +30,6 @@ const aphorisms = [
   {
     text: "Dont' find fault, find a remedy.",
     author: "Henry Ford"
-  },
-  {
-    text: "When you lose, don't lose the lesson.",
-    author: "Dalai Lama"
-  },
-  {
-    text: "Most people overestimate what they can do in one year and underestimate what they can do in ten years.",
-    author: "Bill Gates"
   },
   {
     text: "Your time is limited, so don’t waste it living someone else’s life.",

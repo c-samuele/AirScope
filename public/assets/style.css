@@ -119,10 +119,11 @@ hr{
   text-align: center;
   width:76px;
   color: var(--color-text-default);
-  padding: 15px 10px;
+  align-content: center;
   font-size: 1.4em;
   font-weight: 800;
 }
+
 .metrics-udm{
   color: white;
   font-size: 0.6em;
@@ -133,7 +134,7 @@ hr{
   padding: 15px 20px;
   font-size: 1.1em;
   font-weight: 400;
-  width: 128px;
+  /* width: 128px; */
 }
 .metrics-value .data-avg{
   font-size: 1.3em;

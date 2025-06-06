@@ -29,7 +29,7 @@ switch(type) {
     // Uso JQuery per caricare il contenuto
     container.load("services/dashboard.html", () => {
       
-      avgMetricsGenerate();   // Calcolo la media e aggiorno i valori
+      avgMetricsGenerate('/upload/data');   // Calcolo la media e aggiorno i valori
 
     });     
   break;

@@ -5,8 +5,10 @@ const path = require('path');          // Utility per lavorare con percorsi di f
 const fs = require('fs');              // File System per lavorare con file e directory 
 const csvParse = require('csv-parse'); // Per convertire csv in json
 
-const app = express();                 // Crea un'app Express
-const PORT = 3000;                     // Porta su cui il server ascolta
+const app = express();                        // Crea un'app Express
+const PORT = 3000;                            // Porta su cui il server ascolta
+const DATA_PATH = './upload/dacaricare.json'; // PATH di salvataggio dati
+
 
 app.use(express.static('public'));     // direttiva file statici
 
@@ -20,7 +22,7 @@ app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstra
 // Script -----------------------------------------------------------------|
 const { normalizeDate, normalizeTime } = require('./utils/normalize.js');
 
-// per inviare richieste con body json ( non usato ancora )
+// per inviare richieste con body json
 app.use(express.json());
 
 
@@ -50,7 +52,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
   // VERIFICA DEL CARICAMENTO
   if (!req.file) {
-    return res.status(400).send('Nessun file caricato!');
+    return res.type('text/plain').status(400).send('Nessun file caricato!');
   }
   // SALVATAGGIO Informazioni form Upload
   const citta = req.body.citta;
@@ -98,12 +100,13 @@ app.post('/upload', upload.single('file'), (req, res) => {
       
       // Percorso di salvataggio file caricato
       const outputPath = path.join(__dirname, 'upload', jsonFileName);
+      console.log("[outputPath:"+outputPath+"]");
 
       // Salvo come oggetto JSON
       fs.writeFile(outputPath, JSON.stringify(outputObject, null, 2), (err) => {
         if (err) {  // in caso di errore stampo la risposta catturata
           console.error('Errore nel salvataggio del file JSON:', err); 
-          return res.status(500).send('Errore nel salvataggio del file JSON.');
+          return res.type('text/plain').status(500).send('Errore nel salvataggio del file JSON.');
         }
       // cancello il .csv da /Update
       fs.unlink(csvFilePath, (err) => {
@@ -129,7 +132,7 @@ app.post('/newItem', (req, res) => {
   const newItem = req.body;   // elemento da aggiungere
   console.log('Nuovo item ricevuto:', newItem);
   // Lettura db
-  fs.readFile('./upload/dacaricare.json', 'utf8', (err, data) => {
+  fs.readFile(DATA_PATH, 'utf8', (err, data) => {
     if (err) return res.status(500).json({ error: 'Errore lettura DB' });
 
     // converto in oggetto js
@@ -138,7 +141,7 @@ app.post('/newItem', (req, res) => {
     database.dati.push(newItem); // aggiungo l'elemento 
 
     // scrivo le modifiche in json
-    fs.writeFile('./upload/dacaricare.json', JSON.stringify(database, null, 2), (err) => {
+    fs.writeFile(DATA_PATH, JSON.stringify(database, null, 2), (err) => {
       if (err) return res.status(500).json({ error: 'Errore scrittura DB' });
       // risposta server sucess
       res.status(200).json({ message: 'Dato aggiunto con successo!' });
@@ -152,7 +155,7 @@ app.post('/newItem', (req, res) => {
 
 // DASHBOARD --------------------------------------------------------------------|
 // Data AVG
-app.get('/api/data_avg', (req, res) => {
+app.get('/avgMetrics', (req, res) => {
   fs.readFile('./upload/database.json', 'utf8', (err, data) => {
     if (err) {
       res.status(500).json({ error: 'Errore nel leggere il file' });
@@ -166,8 +169,6 @@ app.get('/api/data_avg', (req, res) => {
 // END DASHBOARD ----------------------------------------------------------------|
 
 // ANALISI --------------------------------------------------------------------|
-
-const DATA_PATH = './upload/dacaricare.json'; // PATH di salvataggio dati
 
 // Endpoint GET leggere i dati (TABELLA & GRAFICO)
 app.get('/upload/data', (req, res) => {
