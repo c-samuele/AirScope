@@ -1,5 +1,5 @@
 // Funzione per popolare la tabella 
-function tableGenerate(database) {  // file.json contenente open data
+function tableGenerate(database,debug) {  // file.json contenente open data
   fetch(database)
     .then(res => res.json())
     .then(dati => {

@@ -1,3 +1,8 @@
+// debug ---------------------------------------------------------------------|
+const debug = true;
+debug ? console.log(`DEBUG MODE: [${debug}]`) : 0; 
+// ---------------------------------------------------------------------------|
+
 // Gestione del menu con link attivo -----------------------------------------|
 document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
   link.addEventListener('click', function () {
@@ -28,21 +33,24 @@ switch(type) {
   case "dashboard":
     // Uso JQuery per caricare il contenuto
     container.load("services/dashboard.html", () => {
-      
-      avgMetricsGenerate('/upload/data');   // Calcolo la media e aggiorno i valori
+      // Calcolo la media e aggiorno i valori
+      avgMetricsGenerate('/upload/data',  // endpoint get
+                          debug);         // debug mode
 
     });     
   break;
 
-  // ASERVIZIO ANALISI
+  // SERVIZIO ANALISI
   case "analitics":
     // Funzione per caricare il contenuto html del servizio con JQuery
     container.load("services/analytics.html", () => {
       // Funzione per generare il grafico
-      chartGenerate('/upload/data');  
-      
+      chartGenerate('/upload/data',   // endpoint get
+                     debug);          // debug mode
+        
       // Funzione per popolare la tabella con i valori del database
-      tableGenerate('/upload/data');
+      tableGenerate('/upload/data',   // endpoint get
+                     debug);          // debug mode
     });
   break;
 

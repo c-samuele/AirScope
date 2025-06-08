@@ -1,4 +1,4 @@
-async function chartGenerate(dataBase) {
+async function chartGenerate(dataBase,debug) {
 
   // Lavoro: elemento grafico html
   const chartAvg = $('#chartAvg');
@@ -6,6 +6,9 @@ async function chartGenerate(dataBase) {
 
   const response = await fetch(dataBase);
   const jsonData = await response.json();
+  
+  // debug ---------------------------|
+  debug ? console.log(response) : 0;
 
   const dataArray = jsonData.dati;
   const labels = dataArray.map(item => `${item.data} ${item.ora}`);

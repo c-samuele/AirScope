@@ -1,5 +1,5 @@
 // funzione per calcolare i valori medi
-function avgMetricsGenerate (database){ // Endpoint per i dati
+function avgMetricsGenerate (database,debug){ // Endpoint per i dati
 
   // valori medi
   let avgValue = {
@@ -30,7 +30,8 @@ function avgMetricsGenerate (database){ // Endpoint per i dati
         })
 
         let len = data.dati.length; // numero degli elementi
-        console.log(len);
+
+        debug ? console.log('numero di misurazioni: ['+ len + ']') : 0; // debug ---------------------------|
 
           // eseguo la media aritmetica
           avgValue.co /= len;
@@ -52,11 +53,13 @@ function avgMetricsGenerate (database){ // Endpoint per i dati
             let id = `#val-${key}`; // id di ogni elemento
 
             if(avgValue[key] >= maxValue[key]){
-              console.log(`superato il massimale di:${avgValue[key]}`);
-              $(id).addClass("text-danger");
+              $(id).addClass("text-danger"); // aggiungo la colorazione rossa al superamento
+              if(debug)
+                console.log(`superato il massimale di: [${avgValue[key]}]`);  // debug ---------------------------|
             }
-            else{    
-              console.log(`Valore sotto la soglia critica:${avgValue[key]}`);
+            else
+            { 
+              debug ? console.log(`Valore sotto la soglia critica: [${avgValue[key]}]`) : 0;  // debug ---------------------------|
             }
           }        
 
