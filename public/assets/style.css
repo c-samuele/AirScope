@@ -313,3 +313,18 @@ thead th {
     margin-top:1rem!important;
   }
 }
+
+.animation-generate-service{
+  animation: opacityFade 900ms ease-out forwards;
+}
+
+@keyframes opacityFade {
+  from {
+    
+    opacity: 0;
+  }
+  to {
+    
+    opacity: 1;
+  }
+}

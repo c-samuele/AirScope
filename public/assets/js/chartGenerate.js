@@ -7,12 +7,13 @@ async function chartGenerate(dataBase,debug) {
   const response = await fetch(dataBase);
   const jsonData = await response.json();
   
-  // debug ---------------------------|
-  debug ? console.log(response) : 0;
+  if(debug) // debug ---------------------------|
+    console.log(response);
 
   const dataArray = jsonData.dati;
   const labels = dataArray.map(item => `${item.data} ${item.ora}`);
 
+  // chart key metrics
   const keys = ['co', 'no2', 'nox', 'o3', 'pm10'];
 
   const datasets = keys.map(key => ({

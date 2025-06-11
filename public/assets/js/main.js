@@ -1,6 +1,5 @@
 // debug ---------------------------------------------------------------------|
 const debug = true;
-debug ? console.log(`DEBUG MODE: [${debug}]`) : 0; 
 // ---------------------------------------------------------------------------|
 
 // Gestione del menu con link attivo -----------------------------------------|
@@ -31,10 +30,16 @@ switch(type) {
 
   // SERVIZIO DASHBOARD
   case "dashboard":
-    // Uso JQuery per caricare il contenuto
-    container.load("services/dashboard.html", () => {
+
+    if(debug){
+      console.clear();
+      console.log(`DEBUG MODE: [${debug}]`);
+    }
+
+    // Uso JQuery per caricare il contenuto via AJAX (Asynchronous JavaScript and XML))
+    container.load("services/dashboard.html", () => { // accetta come parametro 
       // Calcolo la media e aggiorno i valori
-      avgMetricsGenerate('/upload/data',  // endpoint get
+      avgMetricsGenerate('/upload/data',  // endpoint get per i dati
                           debug);         // debug mode
 
     });     
@@ -42,20 +47,30 @@ switch(type) {
 
   // SERVIZIO ANALISI
   case "analitics":
+
+    if(debug){
+      console.clear();
+      console.log(`DEBUG MODE: [${debug}]`);
+    }
     // Funzione per caricare il contenuto html del servizio con JQuery
     container.load("services/analytics.html", () => {
       // Funzione per generare il grafico
-      chartGenerate('/upload/data',   // endpoint get
+      chartGenerate('/upload/data',   // endpoint get per i dati
                      debug);          // debug mode
         
       // Funzione per popolare la tabella con i valori del database
-      tableGenerate('/upload/data',   // endpoint get
+      tableGenerate('/upload/data',   // endpoint get per i dati
                      debug);          // debug mode
     });
   break;
 
   // SERVIZIO RICHIESTA
   case "request":
+
+    if(debug){
+      console.clear();
+      console.log(`DEBUG MODE: [${debug}]`);
+    }
      // Uso JQuery per caricare il contenuto
     container.load("services/request.html", () => {
 
@@ -66,7 +81,7 @@ switch(type) {
         // FormData contiene i dati del form
         const formData = new FormData(e.target);
 
-        // SEZIONE CRITICA
+        // tryCatch per non lasciare eccezioni non gestite
         try {
           // RICHIESTA POST asincrona
           const res = await fetch('/upload', {

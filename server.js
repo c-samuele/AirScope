@@ -12,7 +12,7 @@ const DATA_PATH = './upload/dacaricare.json'; // PATH di salvataggio dati
 
 app.use(express.static('public'));     // direttiva file statici
 
-// Framework ------------------------------------------------------------------|
+// Librerie statiche pubbliche ------------------------------------------------------------------|
 
 // __dirname è il path relativo alla posizione del server.js variabile globale di node.js
 app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
@@ -24,7 +24,6 @@ const { normalizeDate, normalizeTime } = require('./utils/normalize.js');
 
 // per inviare richieste con body json
 app.use(express.json());
-
 
 // MULTER CARICAMENTO FILE ----------------------------------------------------|
 // salvataggio file
@@ -42,6 +41,7 @@ const upload = multer({ storage: storage });
 
 
 // REQUEST --------------------------------------------------------------------|
+
 // Endpoint POST per il caricamento file
 app.post('/upload', upload.single('file'), (req, res) => {
 
@@ -81,7 +81,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
       data.push(row);
     })
     .on('end', function() {         // al termine dello stream
-      //LOG di DEBUG --------------------------------|
+      // LOG di DEBUG --------------------------------|
       // console.log('CSV trasformato in oggetti:');
       // console.log(data.slice(0, 2)); 
       // --------------------------------------------|
@@ -165,6 +165,33 @@ app.get('/avgMetrics', (req, res) => {
     res.json(valori);
   });
 });
+
+// Endpoint DELETE per rimuovere una misurazione tramite DATA e ORA
+app.delete('/delete/:data/:ora', (req, res) => {
+  const dataParam = req.params.data;
+  const oraParam = req.params.ora;
+
+  fs.readFile('./upload/dacaricare.json', 'utf8', (err, fileData) => {
+    if (err) {
+      res.status(500).type('text/plain').send('Errore apertura file');
+      return;
+    }
+
+    let dataSet = JSON.parse(fileData);
+
+    // Rimuovi gli elementi con data e ora corrispondenti
+    dataSet.dati = dataSet.dati.filter(el => !(el.data === dataParam && el.ora === oraParam));
+
+    fs.writeFile('./upload/dacaricare.json', JSON.stringify(dataSet, null, 2), (err) => {
+      if (err) {
+        res.status(500).type('text/plain').send('Errore salvataggio file');
+        return;
+      }
+      res.status(200).type('text/plain').send('Elemento eliminato con successo');
+    });
+  });
+});
+
 
 // END DASHBOARD ----------------------------------------------------------------|
 

@@ -1,5 +1,6 @@
 // funzione per calcolare i valori medi
-function avgMetricsGenerate (database,debug){ // Endpoint per i dati
+function avgMetricsGenerate (database,    // Endpoint per i dati
+                             debug){      // modalità debug
 
   // valori medi
   let avgValue = {
@@ -9,7 +10,8 @@ function avgMetricsGenerate (database,debug){ // Endpoint per i dati
       "o3":0,
     "pm10":0
   }
-  // valori massimi
+
+  // valori massimi nazionali
   let maxValue = {
       "co":10,
      "no2":40,
@@ -22,6 +24,7 @@ function avgMetricsGenerate (database,debug){ // Endpoint per i dati
         .then(res => res.json())
         .then(data => {
          data.dati.forEach(element =>{
+          // CAST a Number per via delle possibili stringhe e.g. co "0,5" -> 0,5
            avgValue.co += Number(element.co);
           avgValue.no2 += Number(element.no2);
           avgValue.nox += Number(element.nox);
@@ -31,7 +34,8 @@ function avgMetricsGenerate (database,debug){ // Endpoint per i dati
 
         let len = data.dati.length; // numero degli elementi
 
-        debug ? console.log('numero di misurazioni: ['+ len + ']') : 0; // debug ---------------------------|
+        if(debug) // debug ---------------------------|
+          console.log('numero di misurazioni: ['+ len + ']'); 
 
           // eseguo la media aritmetica
           avgValue.co /= len;
@@ -54,12 +58,13 @@ function avgMetricsGenerate (database,debug){ // Endpoint per i dati
 
             if(avgValue[key] >= maxValue[key]){
               $(id).addClass("text-danger"); // aggiungo la colorazione rossa al superamento
-              if(debug)
-                console.log(`superato il massimale di: [${avgValue[key]}]`);  // debug ---------------------------|
+              if(debug) // debug ---------------------------|
+                console.log(`Superato il massimale di: [${key}]`);  
             }
             else
             { 
-              debug ? console.log(`Valore sotto la soglia critica: [${avgValue[key]}]`) : 0;  // debug ---------------------------|
+              if(debug) // debug ---------------------------|
+                console.log(`Valore sotto la soglia critica: [${key}]`);  
             }
           }        
 
