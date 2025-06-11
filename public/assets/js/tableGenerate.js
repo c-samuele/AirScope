@@ -22,11 +22,11 @@ function tableGenerate(database, debug) {
         btnDelete.innerHTML = '<i class="bi bi-x-circle"></i>';
 
         btnDelete.addEventListener('click', () => {
-        if (confirm(`Sei sicuro di eliminare il dato ${item.data} ${item.ora}?`)){
+        if (confirm(`Vuoi eliminare la misurazione del ${item.data} alle ${item.ora}?`)){
           fetch(`/delete/${item.data}/${item.ora}`, { method: 'DELETE' })
             .then(res => {
               if (res.ok) {
-                alert(`Eliminato dato ${item.data} ${item.ora}`);
+                showToast('success',"Misurazione eliminata con successo!");
                 tableGenerate(database, debug);
                 // Distruggo il chart
                 if (Chart.getChart("chartAvg")) 
@@ -34,10 +34,10 @@ function tableGenerate(database, debug) {
                 // Creo il chart nuovamente
                 chartGenerate(database, debug);
               } else {
-                alert('Errore durante l\'eliminazione');
+                showToast('error',"Errore durante l'eliminazione!");
               }
             })
-            .catch(err => alert('Errore di rete: ' + err));
+            .catch(err => showToast('error',"Errore di rete: " + err));
         }});
       
 

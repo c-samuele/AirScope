@@ -90,11 +90,17 @@ switch(type) {
           });
           // LOG di Response
           const text = await res.text();
-          console.log(text);
+
+          showToast('success',text);
+
+          if(debug) // Debug ---------------|
+            console.log(text);
 
         // Catturo eventuali errori
         } catch (err) {
-          console.error('Errore nel caricamento:', err);
+          showToast('error','Errore nel caricamento: '+ err);
+          if(debug)
+            console.error('Errore nel caricamento:', err);
         }
       });
       // end ----------------------------------------------------------- //
@@ -122,8 +128,8 @@ switch(type) {
         body: JSON.stringify(newItem)
       })
       .then(res => res.json())
-      .then(data => alert(data.message))
-      .catch(err => alert('Errore: ' + err));
+      .then(data => showToast("success",data.message))
+      .catch(err => showToast('error','Errore: ' + err));
       });
       // end ----------------------------------------------------------- //
 

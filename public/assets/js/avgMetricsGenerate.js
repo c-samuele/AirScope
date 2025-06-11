@@ -45,11 +45,11 @@ function avgMetricsGenerate (database,    // Endpoint per i dati
           avgValue.pm10 /= len;
 
           // aggiorno i valori
-          $('#val-co').text(avgValue.co.toFixed(3));
-          $('#val-no2').text(avgValue.no2.toFixed(3));
-          $('#val-nox').text(avgValue.nox.toFixed(3));
-          $('#val-o3').text(avgValue.o3.toFixed(3));
-          $('#val-pm10').text(avgValue.pm10.toFixed(3));
+          $('#val-co').text(avgValue.co.toFixed(2));
+          $('#val-no2').text(avgValue.no2.toFixed(2));
+          $('#val-nox').text(avgValue.nox.toFixed(2));
+          $('#val-o3').text(avgValue.o3.toFixed(2));
+          $('#val-pm10').text(avgValue.pm10.toFixed(2));
 
           // controllo se supera i massimali
           for(let key in avgValue){

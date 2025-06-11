@@ -115,7 +115,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
       });
 
         console.log('File JSON salvato:', outputPath);
-        res.type('text/plain').status(200).send('File JSON creato correttamente!');
+        res.type('text/plain').status(200).send('File caricato e converito correttamente!');
       });
     }) // END STREAM
 
@@ -144,7 +144,7 @@ app.post('/newItem', (req, res) => {
     fs.writeFile(DATA_PATH, JSON.stringify(database, null, 2), (err) => {
       if (err) return res.status(500).json({ error: 'Errore scrittura DB' });
       // risposta server sucess
-      res.status(200).json({ message: 'Dato aggiunto con successo!' });
+      res.status(200).json({ message: 'Misurazione aggiunta con successo!' });
     });
   });
 });
