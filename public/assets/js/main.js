@@ -88,10 +88,14 @@ switch(type) {
             method: 'POST',
             body: formData
           });
-          // LOG di Response
+
+          // LOG di Response --------------|
           const text = await res.text();
 
-          showToast('success',text);
+          if(res.status!=200)
+            showToast('error',text);
+          else
+            showToast('success',text);
 
           if(debug) // Debug ---------------|
             console.log(text);
@@ -132,6 +136,8 @@ switch(type) {
       .catch(err => showToast('error','Errore: ' + err));
       });
       // end ----------------------------------------------------------- //
+
+      tableFilesGenerate('/upload/files',debug);
 
     });
     break;

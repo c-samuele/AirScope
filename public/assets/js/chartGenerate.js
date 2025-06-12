@@ -1,7 +1,7 @@
 async function chartGenerate(dataBase,debug) {
 
   // Lavoro: elemento grafico html
-  const chartAvg = $('#chartAvg');
+  const chart = $('#chart');
 
 
   const response = await fetch(dataBase);
@@ -24,7 +24,7 @@ async function chartGenerate(dataBase,debug) {
   }));
 
 
-  new Chart(chartAvg, {
+  new Chart(chart, {
     type: 'line',
     data: {
       labels: labels,

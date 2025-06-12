@@ -228,17 +228,6 @@ input[type="time"]::placeholder {
   width:100% ;
 }
 
-/* ZONA FILE LIST ************************************/
-.file-list{
-
-}
-.file-item{
-
-}
-
-/* END ZONA FILE LIST ********************************/
-
-
 .container-metrics {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 colonne */
@@ -283,7 +272,7 @@ color: var(--color-text-default);}
   color: var(--color-i-constrast)!important;
 }
 
-#chartAvg {
+#chart {
   width: 100% !important;
   height: 400px !important;
 }
@@ -306,25 +295,29 @@ thead th {
 }
 
 
-/* MediaQuery per form modifica */
-
+/* MediaQuery per form modifica versione tablet-mobile */
 @media screen and (max-width:991px){
   .space-mobile{
     margin-top:1rem!important;
   }
 }
 
+/* Fade-in per la index */
+.animation-generate-index{
+  opacity: 0;
+  animation: opacityFade 1s linear forwards;
+}
+
+/* Fade-in per i servizi */
 .animation-generate-service{
-  animation: opacityFade 900ms ease-out forwards;
+  animation: opacityFade 900ms ease-out forwards; /* rallenta alla fine, si blocca sull'ultimo fotogramma */
 }
 
 @keyframes opacityFade {
   from {
-    
     opacity: 0;
   }
   to {
-    
     opacity: 1;
   }
 }
