@@ -1,96 +1,92 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AirScope - Web Service</title>
-    <link rel="icon" href="assets/img/favicon.png" type="image/png">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/style.css">
-</head>
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>AirScope - Web Service</title>
+      <link rel="icon" href="assets/img/favicon.png" type="image/png">
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+      <link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+      <link rel="stylesheet" href="assets/style.css">
+  </head>
 
-<body class="bg-service" >
+  <body>
 
-<main class="d-flex flex-nowrap min-vh-100">
-    <!-------------------------- Menu ------------------------------------------------------------------>
-    <nav class="menu-side d-flex flex-column flex-shrink-0 p-3 text-bg-dark">
-    <div class="d-flex justify-content-center">
-      <a href="index.html" class="d-flex align-items-center text-white text-decoration-none">
-        <!------------------------------------------ LOGO SVG ------------------------------------------>
-        <object type="image/svg+xml" id="logo-desktop" width="200" data="./assets/svg/logo.svg"></object>
-        <object type="image/svg+xml" id="logo-mobile" width="48" data="./assets/svg/icon.svg"></object>
-    </a>
-</div>
-
-    <hr>
-    <!-- menu btn section -->
-    <ul id="menu-nav" class="nav nav-pills flex-column">
-      <li class="nav-item">
-        <a id="dashboard-btn" href="#" class="nav-link text-white active" aria-current="page">
-          <i class="bi bi-columns-gap icon-menu"></i>
-          <span class="li-menu-desktop">Dashboard</span>
+    <main class="d-flex min-vh-100">
+        <!-------------------------- Menu ------------------------------------------------------------------>
+        <nav class="menu-side d-flex flex-column flex-shrink-0 p-3 text-bg-dark">
+        <div class="d-flex justify-content-center">
+          <a href="index.html" class="d-flex align-items-center text-white text-decoration-none">
+            <!------------------------------------------ LOGO SVG ------------------------------------------>
+            <object type="image/svg+xml" id="logo-desktop" width="200" data="./assets/svg/logo.svg"></object>
+            <object type="image/svg+xml" id="logo-mobile" class="svg-icon" width="48" data="./assets/svg/icon.svg"></object>
         </a>
-      </li>
+    </div>
 
-      <li>
-        <a id="analitics-btn" href="#" class="nav-link text-white">
-         <i class="bi bi-speedometer icon-menu"></i>
-          <span class="li-menu-desktop">Analytics</span>
-        </a>
-      </li>
+        <hr>
+        <!-- menu btn section -->
+        <ul id="menu-nav" class="nav nav-pills flex-column">
+          <li class="nav-item">
+            <a id="dashboard-btn" href="#" class="nav-link text-white active" aria-current="page">
+              <i class="bi bi-columns-gap icon-menu"></i>
+              <span class="li-menu-desktop">Dashboard</span>
+            </a>
+          </li>
 
-      <li>
-        <a id="request-btn" href="#" class="nav-link text-white">
-          <i class="bi bi-cloud-arrow-up icon-menu"></i>
-          <span class="li-menu-desktop">Requests</span>
-        </a>
-      </li>
-    </ul>
+          <li>
+            <a id="analitics-btn" href="#" class="nav-link text-white">
+            <i class="bi bi-speedometer icon-menu"></i>
+              <span class="li-menu-desktop">Analytics</span>
+            </a>
+          </li>
 
-    <hr>
-    <!-- menu > footer > version -->
-    <div class="version">
-        <i>Version GUI <span class="version-number"></span></i>
-    </div>  
+          <li>
+            <a id="request-btn" href="#" class="nav-link text-white">
+              <i class="bi bi-cloud-arrow-up icon-menu"></i>
+              <span class="li-menu-desktop">Requests</span>
+            </a>
+          </li>
+        </ul>
 
-  </nav>
+        <hr>
+        <!-- menu > footer > version -->
+        <div class="text-center">
+            <p><span class="version-number"></span></p>
+        </div>  
 
-  <div class="divider-a"></div>
+      </nav>
+
+      <section id="main-section" class="flex-grow-1 p-4">
+      
+      </section>
+
+      <!-- TOAST -->
+      <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
 
 
-  <section id="main-section" class="flex-grow-1 p-4">
-  
-  </section>
 
-  <!-- TOAST -->
-  <div id="toast-container" class="toast-container position-fixed bottom-0 end-0 p-3"></div>
+    </main>
 
+      <!-- LIBRERIE -->
+        <script src="/jquery/jquery.min.js"></script>
+        <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/chart/chart.umd.js"></script>
+        <script src="/assets/toast.js"></script>
 
+        <!-- SCRIPT -->
+        <script src="./assets/js/showToast.js"></script>
+        <script src="./assets/js/version.js"></script>
+        <script src="./assets/js/main.js"></script>
+        <script src="./assets/js/chartGenerate.js"></script>  
+        <script src="./assets/js/tableGenerate.js"></script>
+        <script src="./assets/js/tableFilesGenerate.js"></script>
+        <script src="./assets/js/avgMetricsGenerate.js"></script>
 
-</main>
-
-   <!-- LIBRERIE -->
-    <script src="/jquery/jquery.min.js"></script>
-    <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="/chart/chart.umd.js"></script>
-    <script src="/assets/toast.js"></script>
-
-    <!-- SCRIPT -->
-    <script src="./assets/js/showToast.js"></script>
-    <script src="./assets/js/version.js"></script>
-    <script src="./assets/js/main.js"></script>
-    <script src="./assets/js/chartGenerate.js"></script>  
-    <script src="./assets/js/tableGenerate.js"></script>
-    <script src="./assets/js/tableFilesGenerate.js"></script>
-    <script src="./assets/js/avgMetricsGenerate.js"></script>
-
-  <!-- Genero la dashboard al caricamento della pagina -->
-  <script>
-      window.addEventListener("DOMContentLoaded", () => { 
-          contentGenerate("dashboard");
-      });
-  </script>
-
-</body>
+      <!-- Genero la dashboard al caricamento della pagina -->
+      <script>
+          window.addEventListener("DOMContentLoaded", () => { 
+              contentGenerate("dashboard");
+          });
+      </script>
+  </body>
 </html>

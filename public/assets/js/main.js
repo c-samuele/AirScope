@@ -81,7 +81,6 @@ switch(type) {
         // FormData contiene i dati del form
         const formData = new FormData(e.target);
 
-        // tryCatch per non lasciare eccezioni non gestite
         try {
           // RICHIESTA POST asincrona
           const res = await fetch('/upload', {

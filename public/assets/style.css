@@ -1,10 +1,12 @@
+/* ----------- ROOT ----------- */
 :root{
 --bg-dark: #1a1c1d;
 --color-i-constrast: #6a6a6a;
---color-text-default:#ececec;
+--color-text-default:#ececec; 
 --bs-border-color: #495057;
---bs-tertiary-bg-rgb: 43, 48, 53;
+--background-container: #2b3035;
 --tcolor-placeholder:white;
+--avg-value-ok:#04f104;
 }
 
 *{
@@ -12,66 +14,35 @@
   margin: 0;
   padding: 0;
 }
+/* ----------- END ROOT ----------- */
 
-/* INDEX *****************************/
+
+/* ----------- TAG ----------- */
+h1{
+  color:var(--color-text-default);
+  font-size: 1.6em;
+}
+
+h2{
+  color:var(--color-text-default);
+  font-size: 1.3em;
+}
+
+hr{
+  background-color: var(--bs-border-color);
+}
+/* ----------- END TAG ----------- */
+
+
+/* INDEX PAGE **************************************************/
 .img-sky{
   background-image: url(./img/blue_sky.png);
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-/* END INDEX *************************/
-
-h1{
-  color:var(--color-text-default);
-  font-size: 1.6em;
-}
-h2{
-  color:var(--color-text-default);
-  font-size: 1.6em;
-}
-
-.title{
-    font-size: 1.5em;
-  font-weight: 400;
-}
-
-.svg-icon{
-  fill:var(--color-text-default)
-}
-.svg-icon:hover{
-  fill: var(--color-i-constrast);
-  transition: fill 200ms ease-in-out;
-}
-
 .aphorism{
   font-weight: 100;
-}
-
-.bg-service{
-  background-color:#212529;
-}
-
-.menu-side{
-  width: 250px;
-  height: auto;
-}
-
-.version{
-  color:var(--color-i-constrast);
-  font-size: 0.8em;
-  text-align: center;
-}
-.version-number{
-  color:var(--color-i-constrast);
-  font-size: 0.9em;
-}
-
-.divider-b {
-  width: 100%;
-  background-color: rgba(0, 0, 0, .1);
-  border: solid rgba(0, 0, 0, .15);
-  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
 }
 
 .author-signature{
@@ -79,38 +50,61 @@ h2{
   color: #515151;;
 }
 
-hr{
-  background-color: rgb(88 92 95);
-}
-
-
 .divider {
   background-color:var(--bg-dark);
-  border: solid rgba(11, 3, 3, 0.15);
-  border-width: 1px 0;
-  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+  box-shadow: inset 0px 2px 18px black;
+}
+/* END INDEX PAGE **************************************************/
+
+
+/* SERVICE PAGE **************************************************/
+
+/* ----------- NAVBAR ----------- */
+.menu-side a object {
+  pointer-events: none; /* disattiva l'evento sull'object (impediva ad <a> di funzionare) */
 }
 
-.divider-a {
-  background-color: rgb(88 92 95);
-  opacity: 0.3;
-  flex-shrink: 0;
-  width: 2px;
+.menu-side{
+  width: 250px;
   height: auto;
 }
 
+.li-menu-desktop{
+  display: contents;
+}
+
+.icon-menu{
+  font-size: 1em;
+}
+
+.version-number{
+  color:var(--color-i-constrast);
+  font-size: 0.8em;
+}
+/* ----------- END NAVBAR ----------- */
+
+/* ----------- SEZIONE PRINCIPALE PAGINA ----------- */
 #main-section{
   background-color: #1a1c1d;
-  box-shadow: inset 5px 0 100px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 5px 0 120px rgba(0, 0, 0, 0.8);
+}
+/* ----------- END SEZIONE PRINCIPALE PAGINA ----------- */
+
+/* ----------- DASHBOARD ----------- */
+/* AVG metrics */
+.container-metrics {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 colonne */
+  grid-auto-rows: auto;
+  gap: 1rem;
 }
 
 .item-card{    
-  background-color: rgba(var(--bs-tertiary-bg-rgb), 1);
+  background-color: var(--background-container);
   border: 1px solid var(--bs-border-color) !important;
 }
 
-
-.item-card h3,p,i{
+.item-card h2,p,i{
   color:var(--color-text-default);
   margin: 0;
 }
@@ -124,73 +118,50 @@ hr{
   font-weight: 800;
 }
 
-.metrics-udm{
-  color: white;
-  font-size: 0.6em;
-  font-weight: 100;
-}
-.metrics-value{
-  color: var(--color-text-default);
-  padding: 15px 20px;
-  font-size: 1.1em;
-  font-weight: 400;
-  /* width: 128px; */
-}
-.metrics-value .data-avg{
-  font-size: 1.3em;
-  color: rgb(4, 241, 4);
-}
-
-.feature-icon{
-  border-radius: var(--bs-card-inner-border-radius);
-  padding: 4px 8px;
-}
-
-
-.divider-metrics{
+.metrics-divider{
   background-color:var(--bs-border-color);
   height: auto!important;
   width: 1px!important;
 }
 
-.li-menu-desktop{
-  display: contents;
+.metrics-value{
+  padding: 15px 20px;
+  font-size: 1.1em;
+  font-weight: 400;
 }
 
-.icon-menu{
-  font-size: 1em;
+.metrics-udm{
+  color: white;
+  font-size: 0.6em;
+  font-weight: 100;
 }
 
-.menu-side a object {
-  pointer-events: none;
+.metrics-value .data-avg{
+  font-style: normal;
+  font-size: 1.3em;
+  color: var(--avg-value-ok); 
+}
+/* END AVG metrics */
+
+/* Section Legenda */
+.border-bottom-legenda{
+  border-bottom: 1px solid var(--bs-border-color);
 }
 
-@media screen and (max-width: 850px){
-  #logo-desktop{
-    display: none;
-  }
-  .li-menu-desktop{
-    display: none;
-  }
-  .menu-side {
-    width: 84px;
-  }
-  .version-desktop-menu{
-    display: none;
-  }
-  .icon-menu{
-  font-size:1.35em;
-  }
-  .divider-a{
-    width: 0.1rem;
-  }
+.icon-legenda{
+  font-size: 1.5em;
+  border-radius: 0.5rem;
+  height: 50px;
+  min-width: 96px;
+  padding: 4px 8px;
 }
+/* END Section Legenda */
+/* ----------- END DASHBOARD ----------- */
 
-@media screen and (min-width: 850px){
-  #logo-mobile{
-    display: none;
-  }
-}
+/* END SERVICE PAGE **************************************************/
+
+
+
 
 /* COMPONENTE CARICA FILE */
 
@@ -216,24 +187,18 @@ input[type="time"]::placeholder {
   color: var(--color-i-constrast);
 }
 
-
 /* FORM di bootstrap modificato */
 .form-control[type=file]{
   background-color: transparent!important;
 }
+
 /* stile del form box */
 .form-api{
-  background-color: rgba(var(--bs-tertiary-bg-rgb), 1);
+  background-color: var(--background-container);
   border: 1px solid var(--bs-border-color) !important;
   width:100% ;
 }
 
-.container-metrics {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* 5 colonne */
-  grid-auto-rows: auto;
-  gap: 1rem;
-}
 .container-form {
   display: grid;
   grid-template-columns: 1fr;
@@ -242,31 +207,6 @@ input[type="time"]::placeholder {
 }
 .form-control[type=file]{
 color: var(--color-text-default);}
-
-@media screen and (max-width: 1600px){
-  .container-metrics {
-    grid-template-columns: repeat(3, 1fr); 
-  }
-}
-@media screen and (max-width: 1000px){
-  .container-metrics {
-    grid-template-columns: repeat(2, 1fr); 
-  }}
-@media screen and (max-width: 600px){
-  .container-metrics {
-    grid-template-columns: repeat(1, 1fr); 
-  }
-  /* sposto il bottone carica in riga versione desktop->mobile */
-  .layout-dsk-mobile{
-    flex-direction: column!important;
-  }
-  /* aggiorno anche il padding del bottone carica */
-  .info-data{
-    font-size:0.8em;
-    padding:0 0 16px 0;
-  }
-  
-}
 
 #data{
   color: var(--color-i-constrast)!important;
@@ -278,13 +218,13 @@ color: var(--color-text-default);}
 }
 
 .container-general{
-  background-color: rgba(var(--bs-tertiary-bg-rgb), 1);
+  background-color: var(--background-container);
   border: 1px solid var(--bs-border-color) !important;
   width: 100%;
 }
 
 .table-section{
-    max-height: 400px;
+    max-height: 426px;
     overflow: scroll;
 }
 
@@ -294,13 +234,6 @@ thead th {
   z-index: 1;
 }
 
-
-/* MediaQuery per form modifica versione tablet-mobile */
-@media screen and (max-width:991px){
-  .space-mobile{
-    margin-top:1rem!important;
-  }
-}
 
 /* Fade-in per la index */
 .animation-generate-index{
@@ -312,7 +245,7 @@ thead th {
 .animation-generate-service{
   animation: opacityFade 900ms ease-out forwards; /* rallenta alla fine, si blocca sull'ultimo fotogramma */
 }
-
+/* Animazione opacità (fade-in) */
 @keyframes opacityFade {
   from {
     opacity: 0;
@@ -321,3 +254,67 @@ thead th {
     opacity: 1;
   }
 }
+
+
+
+/* +-+-+-+-+-+-+-+-+-+- Media Query -+-+-+-+-+-+-+-+-+-+ */
+
+/* Nav bar responsive */
+@media screen and (max-width: 850px){
+  #logo-desktop{
+    display: none;
+  }
+  .li-menu-desktop{
+    display: none;
+  }
+  .menu-side {
+    width: 84px;
+  }
+  .version-desktop-menu{
+    display: none;
+  }
+  .icon-menu{
+  font-size:1.35em;
+  }
+}
+/* Disattivo il logo versione mobile */
+@media screen and (min-width: 850px){
+  #logo-mobile{
+    display: none;
+  }
+}
+/* Avg metrics responsive lg */
+@media screen and (max-width: 1600px){
+  .container-metrics {
+    grid-template-columns: repeat(3, 1fr); 
+  }
+}
+/* Avg metrics responsive md */
+@media screen and (max-width: 1000px){
+  .container-metrics {
+    grid-template-columns: repeat(2, 1fr); 
+  }}
+/* Avg metrics responsive sm */
+@media screen and (max-width: 600px){
+  .container-metrics {
+    grid-template-columns: repeat(1, 1fr); 
+  }
+  /* sposto il bottone carica in riga versione mobile */
+  .layout-dsk-mobile{
+    flex-direction: column!important;
+  }
+  /* aggiorno anche il padding del bottone carica */
+  .info-data{
+    font-size:0.8em;
+    padding:0 0 16px 0;
+  } 
+}
+
+/* MediaQuery per form modifica versione tablet-mobile */
+@media screen and (max-width:991px){
+  .space-mobile{
+    margin-top:1rem!important;
+  }
+}
+
+/* +-+-+-+-+-+-+-+-+-+- END Media Query -+-+-+-+-+-+-+-+-+-+ */

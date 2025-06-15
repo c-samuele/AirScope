@@ -28,11 +28,7 @@ const {readFilesList,addFileList} = require('./utils/filesAddAndRead.js');
 app.use(express.json());
 
 
-// -------------------------------------------------------- ENDPOINT --------------------------------------------------------|
-
-
 // CREO il file per la GESTIONE DEI FILES --------------------------------------|
-
 const FILES_LIST_PATH = path.join(__dirname, 'upload', 'files.json'); // Percorso completo del file JSON che conterrà la lista dei file caricati
 
 // Controllo se il file.json esiste già nella cartella /upload
@@ -40,9 +36,8 @@ if (!fs.existsSync(FILES_LIST_PATH)) {
   fs.writeFileSync(FILES_LIST_PATH, '[]', 'utf8');  // Se NON esiste, lo CREO con un array vuoto
   console.log("[files.json] è stato creato!\n")
 }
-else{
+else
   console.log("[files.json] esiste già!\n");
-}
 
 // MULTER CARICAMENTO FILE -----------------------------------------------------------|
 // salvataggio file
@@ -58,20 +53,20 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 // END MULTER ------------------------------------------------------------------------|
 
-
+// -------------------------------------------------------- ENDPOINT --------------------------------------------------------|
 // REQUEST ---------------------------------------------------------------------------|
 
 // Endpoint POST per il caricamento file
 app.post('/upload', upload.single('file'), (req, res) => {
 
   // LOG DI DEBUG --------------------|
-  // console.log('req.body:', req.body);
-  // console.log('req.file:', req.file);
+  console.log('req.body:', req.body);
+  console.log('req.file:', req.file,"\n");
   // ---------------------------------|
 
-  // VERIFICA DEL CARICAMENTO
+  // Verifica contenuto
   if (!req.file) {
-    return res.type('text/plain').status(400).send('Nessun file caricato!');
+    return res.type('text/plain').status(404).send('Nessun file caricato!');
   }
   // SALVATAGGIO Informazioni form Upload
   const citta = req.body.citta;
@@ -79,46 +74,52 @@ app.post('/upload', upload.single('file'), (req, res) => {
   const csvFilePath = req.file.path;
 
   // LOG DI DEBUG --------------------|
-  // console.log('Città:', citta);
-  // console.log('Ente:', ente);
-  // console.log('Percorso file:', csvFilePath);
+  console.log('Città:', citta);
+  console.log('Ente:', ente);
+  console.log('Percorso file:', csvFilePath + "\n");
   // ---------------------------------|
 
-  const data = [];     // variabile di salvataggio oggetti convertiti
-  fs.createReadStream(csvFilePath)  // stream di lettura sul file csv
-    // Converto in oggetto Js
-    .pipe(csvParse.parse({ columns: true, trim: true }))    // columns:prima riga ignorata(legenda). trim:rimuove spazi iniziali/finali
-    // itero sugli eventi 'data' dati dallo stream del parse
-    .on('data', function(row) {     // per ogni riga del csv 
+  const dati = [];     // variabile di salvataggio dati
+
+  fs.createReadStream(csvFilePath)  // stream di lettura sul file csv    
+    .pipe(  // Passa lo stream al parser
+          csvParse.parse({  // Converto riga per riga in oggetto Js
+                           columns: true,   // Indica che ci sono le chiavi nella prima riga
+                           trim: true       // Rimuovo spazi iniziali/finali
+                          }))
+    // 'data' - Ad ogni nuovo chunk disponibile (oggetto completo)
+    .on('data', (row) => { // row sarebbe il chunk ricevuto dall'evento 'data' dello stream appena parsato
         // normalizzo la data
         if (row.data) 
           row.data = normalizeDate(row.data);
         // normalizzo l'orario
         if (row.ora) 
           row.ora = normalizeTime(row.ora);
-      // aggiungo la data
-      data.push(row);
+      // aggiungo all'array l'oggetto js normalizzato
+      dati.push(row);
     })
-    .on('end', function() {         // al termine dello stream
-      // LOG di DEBUG --------------------------------|
-      // console.log('CSV trasformato in oggetti:');
-      // console.log(data.slice(0, 2)); 
-      // --------------------------------------------|
+    // 'end' - Alla fine dello stream (esauriti i chunk) 
+    .on('end', () => {
+
+      console.log("il primo oggetto:",dati.slice(0, 1), "\n"); // LOG di DEBUG -----------|
+
       const csvFileName = req.file.filename;                        // estrazione del nome file
       const jsonFileName = csvFileName.replace(/\.csv$/i, '.json'); // rinomino l'estensione del file
 
+      console.log("csvNameFile: [",csvFileName ,"]\n"); // LOG di DEBUG -----------|
+/* ------------------------------------------------------------------------------------------------------------------------*/
       // Oggetto da Salvare -------------------------|
       const outputObject = {
         citta: citta, 
         ente: ente,
         fileJson: jsonFileName,
-        dati: data
+        dati: dati
       };
       // --------------------------------------------|
       
       // Percorso di salvataggio file caricato
       const outputPath = path.join(__dirname, 'upload', jsonFileName);
-      console.log("[outputPath:"+outputPath+"]");
+      console.log("OutputPath:["+outputPath+"]");
 
       // Salvo come oggetto JSON
       fs.writeFile(outputPath, JSON.stringify(outputObject, null, 2), (err) => {
@@ -255,7 +256,7 @@ app.delete('/delete/:data/:ora', (req, res) => {
 
 
 app.listen(3000, () => {
-  console.log(`Server in ascolto su http://localhost:${PORT}`);
+  console.log(`Server in ascolto su http://localhost:${PORT}\n`);
 });
 
 

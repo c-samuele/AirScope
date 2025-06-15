@@ -2,7 +2,7 @@
 function showToast(type,        // tipo di sfondo   
                    message) {   // messaggio da visualizzare
 
-// Stili bootstrap da applicare al toast
+// classi BS da applicare al toast
     const types = {
         success: 'bg-success text-white',
         error: 'bg-danger text-white',

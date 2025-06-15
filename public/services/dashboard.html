@@ -1,118 +1,100 @@
+<!-- Contenitore Service -->
 <div class="animation-generate-service container-fluid">
+  <!-- AVG SECTION -->
   <section>
     <div class="col-12 mb-3">
       <h2>Average air quality</h2>
     </div>
-
+    <!-- AVG METRICS -->
     <div class="container-metrics">
       <section class="d-flex flex-row item-card rounded-3">
-        <h3 class="title-metrics">CO</h3>
-        <div class="divider-metrics"></div>
-        <i class="metrics-value"><span id="val-co" class="data-avg"></span> <span class="metrics-udm">[mg/m³]</span></i>
+        <h2 class="title-metrics">CO</h2>
+        <div class="metrics-divider"></div>
+        <i class="metrics-value"><span id="val-co" class="data-avg"></span> <span class="metrics-udm">[mg/m<sup>3</sup>]</span></i>
       </section>
       
       <section class="d-flex flex-row item-card rounded-3">
-        <h3 class="title-metrics">NO₂</h3>
-        <div class="divider-metrics"></div>
-        <i class="metrics-value"><span id="val-no2" class="data-avg"></span> <span class="metrics-udm">[μg/m³]</span></i>
+        <h2 class="title-metrics">NO<sub>2</sub></h2>
+        <div class="metrics-divider"></div>
+        <i class="metrics-value"><span id="val-no2" class="data-avg"></span> <span class="metrics-udm">[μg/m<sup>3</sup>]</span></i>
       </section>
     
       <section class="d-flex flex-row item-card rounded-3">
-        <h3 class="title-metrics">NOx</h3>
-        <div class="divider-metrics"></div>
-        <i class="metrics-value"><span id="val-nox" class="data-avg"></span> <span class="metrics-udm">[μg/m³]</span></i>
+        <h2 class="title-metrics">NO<sub>x</sub></h2>
+        <div class="metrics-divider"></div>
+        <i class="metrics-value"><span id="val-nox" class="data-avg"></span> <span class="metrics-udm">[μg/m<sup>3</sup>]</span></i>
       </section>
     
       <section class="d-flex flex-row item-card rounded-3">
-        <h3 class="title-metrics">O₃</h3>
-        <div class="divider-metrics"></div>
-        <i class="metrics-value"><span id="val-o3" class="data-avg"></span> <span class="metrics-udm">[μg/m³]</span></i>
+        <h2 class="title-metrics">O<sub>3</sub></h2>
+        <div class="metrics-divider"></div>
+        <i class="metrics-value"><span id="val-o3" class="data-avg"></span> <span class="metrics-udm">[μg/m<sup>3</sup>]</span></i>
       </section>
     
       <section class="d-flex flex-row item-card rounded-3">
-        <h3 class="title-metrics">PM10</h3>
-        <div class="divider-metrics"></div>
-        <i class="metrics-value"><span id="val-pm10"  class="data-avg"></span> <span class="metrics-udm">[μg/m³]</span></i>
+        <h2 class="title-metrics">PM<sub>10</sub></h2>
+        <div class="metrics-divider"></div>
+        <i class="metrics-value"><span id="val-pm10"  class="data-avg"></span> <span class="metrics-udm">[μg/m<sup>3</sup>]</span></i>
       </section>
     </div>
   </section>
 
   <section class="py-4">
-    <div class="card container-general rounded-3 text-center">
-      <div class="card-header text-light">Benvenuto</div>
-      <div class="card-body">
-      <h5 class="card-title text-light">Ecco una breve introduzione all'uso.</h5>
-      <p class="card-text">Per l'utilizzo del sistema di monitoraggio AirScope© è necessario caricare il file in formato .csv dall'apposita sezione 'request'.</p>
-      <a href="#" id="vai" class="btn m-3 btn-outline-primary">Vai al Caricamento</a>
+    <div class="container-general rounded-3 text-center">
+        <h1 class="border-bottom-legenda text-light py-3">Principali inquinanti Atmosferici</h1>
+      <div class="container px-4 py-2">
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
 
-    <div class="container px-4 py-2" id="featured-3">
-      <h2 class="pb-4 border-bottom">Principali Inquinanti Atmosferici</h2>
-      <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-
-        <!-- CO -->
-        <div class="feature col">
-          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-dark bg-gradient fs-2 mb-3">
-            CO
+          <div class="col">
+            <div class="icon-legenda d-inline-flex align-items-center justify-content-center text-bg-dark bg-gradient mb-3">
+              CO
+            </div>
+            <h3 class="text-light">Monossido di Carbonio</h3>
+            <p>Gas tossico incolore e inodore prodotto da combustione incompleta, riduce l'apporto di ossigeno nel sangue.</p>
           </div>
-          <h3 class="fs-2 text-light">Monossido di Carbonio</h3>
-          <p>Gas tossico incolore e inodore prodotto da combustione incompleta, riduce l'apporto di ossigeno nel sangue.</p>
-        </div>
 
-        <!-- NO2 -->
-        <div class="feature col">
-          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-dark bg-gradient fs-2 mb-3">
-            NO₂
+          <div class="col">
+            <div class="icon-legenda d-inline-flex align-items-center justify-content-center text-bg-dark bg-gradient mb-3">
+              NO<sub>2</sub>
+            </div>
+            <h3 class="text-light">Diossido di Azoto</h3>
+            <p>Prodotto dai motori a combustione, irrita le vie respiratorie e contribuisce alla formazione di ozono.</p>
           </div>
-          <h3 class="fs-2 text-light">Diossido di Azoto</h3>
-          <p>Prodotto dai motori a combustione, irrita le vie respiratorie e contribuisce alla formazione di ozono.</p>
-        </div>
 
-        <!-- NOx -->
-        <div class="feature col">
-          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-dark bg-gradient fs-2 mb-3">
-            NOx
+          <div class="col">
+            <div class="icon-legenda d-inline-flex align-items-center justify-content-center text-bg-dark bg-gradient mb-3">
+              NO<sub>x</sub>
+            </div>
+            <h3 class="text-light">Ossidi di Azoto</h3>
+            <p>Gruppo di gas reattivi prodotti da combustione ad alta temperatura. Precursor dell'ozono e del particolato.</p>
           </div>
-          <h3 class="fs-2 text-light">Ossidi di Azoto</h3>
-          <p>Gruppo di gas reattivi prodotti da combustione ad alta temperatura. Precursor dell'ozono e del particolato.</p>
-        </div>
 
-        <!-- O3 -->
-        <div class="feature col">
-          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-dark bg-gradient fs-2 mb-3">
-            O₃
+          <div class="col">
+            <div class="icon-legenda d-inline-flex align-items-center justify-content-center text-bg-dark bg-gradient mb-3">
+              O<sub>3</sub>
+            </div>
+            <h3 class="text-light">Ozono Troposferico</h3>
+            <p>Gas secondario che si forma con sole e inquinanti. Irritante per le vie respiratorie e dannoso per la salute.</p>
           </div>
-          <h3 class="fs-2 text-light">Ozono Troposferico</h3>
-          <p>Gas secondario che si forma con sole e inquinanti. Irritante per le vie respiratorie e dannoso per la salute.</p>
-        </div>
 
-        <!-- PM10 -->
-        <div class="feature col">
-          <div class="feature-icon d-inline-flex align-items-center justify-content-center text-bg-dark bg-gradient fs-2 mb-3">
-            PM10
+          <div class="col">
+            <div class="icon-legenda d-inline-flex align-items-center justify-content-center text-bg-dark bg-gradient mb-3">
+              PM<sub>10</sub>
+            </div>
+            <h3 class="text-light">Particolato Fine</h3>
+            <p>Micropolveri sospese nell’aria, possono penetrare nei polmoni e causare malattie respiratorie e cardiovascolari.</p>
           </div>
-          <h3 class="fs-2 text-light">Particolato Fine</h3>
-          <p>Micropolveri sospese nell’aria, possono penetrare nei polmoni e causare malattie respiratorie e cardiovascolari.</p>
-        </div>
 
+        </div>
       </div>
-    </div>
 
-      </div>
       <div id="data" class="card-footer text-light"></div>
-    </div>
+
+    </div>   
   </section>
 
 </div>
 
-
-
 <script>
-
-  document.getElementById('data').textContent = new Date().toUTCString();
-
-  
-  $("#vai").click(function(){
-    $("#vai").fadeOut();
-  });
-
+  $('#data').text(new Date().toUTCString());
 </script>

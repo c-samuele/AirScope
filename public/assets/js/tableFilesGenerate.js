@@ -1,6 +1,6 @@
 function tableFilesGenerate(files, debug) {
   fetch(files)
-    .then(res => res.json())
+    .then(response => response.json())
     .then(fileList => {
       const table = document.getElementById("files-table");
       const tbody = table.querySelector("tbody");
@@ -8,36 +8,37 @@ function tableFilesGenerate(files, debug) {
 
       fileList.forEach(item => {
         const tr = document.createElement('tr');
+        const thKey = ['filename', 'citta', 'ente'];
 
-        ['filename', 'citta', 'ente'].forEach(chiave => {
+        thKey.forEach(chiave => {
           const td = document.createElement('td');
           td.textContent = item[chiave];
           tr.appendChild(td);
         });
 
-        const tdDelete = document.createElement('td');
-        const btnDelete = document.createElement('button');
-        btnDelete.classList.add('btn', 'btn-sm', 'btn-danger');
-        btnDelete.innerHTML = '<i class="bi bi-x-circle"></i>';
+        const tdActionDelete = document.createElement('td');
 
-        btnDelete.addEventListener('click', () => {
-          if (confirm(`Vuoi eliminare il file ${item.filename}?`)) {
+        tdActionDelete.innerHTML = '<button class="btn btn-danger"><i class="bi bi-x-circle"></i></button>';
+
+        tdActionDelete.addEventListener('click', () => {
+          if (confirm(`Eliminare il file: [${item.filename}] ?`)) {
             fetch(`/deletefiles/${item.filename}`, { method: 'DELETE' })
-              .then(res => {
-                if (res.ok) {
+              .then(response => {
+                if (response.ok) {
                   showToast('success', "File eliminato con successo!");
                   tableGenerate(files, debug);
                 } else {
                   showToast('error', "Errore durante l'eliminazione!");
                 }
               })
-              .catch(err => showToast('error', "Errore di rete: " + err));
+              .catch(e => showToast('error', `Errore generico: ${e}`));
           }
         });
 
-        tdDelete.appendChild(btnDelete);
-        tr.appendChild(tdDelete);
+        tr.appendChild(tdActionDelete);
         tbody.appendChild(tr);
       });
     });
 }
+
+// 31
