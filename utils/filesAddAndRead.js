@@ -9,11 +9,13 @@ function readFilesList() {
     return JSON.parse(content); // converto in js
   } catch (e) {
     console.error(`Impossibile leggere il ${FILES_LIST_PATH} \nErrore: ${e}`);
+    return [];
   }
 }
 
 // Aggiunge il riferimento e le informazioni al DB files.json
 function addFileList(newFile) {
+
   try {
     let filesList = readFilesList(); // prendo il file convertito da readFilesList
 

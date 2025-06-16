@@ -60,8 +60,8 @@ const upload = multer({ storage: storage });
 app.post('/upload', upload.single('file'), (req, res) => {
 
   // LOG DI DEBUG --------------------|
-  console.log('req.body:', req.body);
-  console.log('req.file:', req.file,"\n");
+  // console.log('req.body:', req.body);
+  // console.log('req.file:', req.file,"\n");
   // ---------------------------------|
 
   // Verifica contenuto
@@ -72,12 +72,34 @@ app.post('/upload', upload.single('file'), (req, res) => {
   const citta = req.body.citta;
   const ente = req.body.ente;
   const csvFilePath = req.file.path;
+  const csvFileName = req.file.filename;     
+
 
   // LOG DI DEBUG --------------------|
-  console.log('Città:', citta);
-  console.log('Ente:', ente);
-  console.log('Percorso file:', csvFilePath + "\n");
+  // console.log('Città:', citta);
+  // console.log('Ente:', ente);
+  // console.log('Percorso file:', csvFilePath + "\n");
   // ---------------------------------|
+
+// -- Controllo se esiste già -------------------------------|
+  const jsonFileName = req.file.filename.replace(/\.csv$/i, '.json');
+
+  const files = readFilesList();  // ottengo l'array di file
+
+  // Log per debug del confronto
+  console.log("\n|---------Match:---------|\n");
+  console.log("jsonFileName: ",jsonFileName,);  
+  files.forEach(f => console.log("f.filename: ", f.filename));
+
+  if (files.some(f => f.filename === jsonFileName)) { 
+    // elimino il file csv già presente che multer ha già caricato in automatico in storage precedentemente definito
+    fs.unlink(csvFilePath, (err) => {
+            if (err) console.warn('Errore nella rimozione del file CSV: '+ err);
+            else console.log('File CSV rimosso:', csvFilePath);
+          });
+    return res.status(400).type('text/plain').send('File già esistente!'); 
+  }
+
 
   const dati = [];     // variabile di salvataggio dati
 
@@ -102,13 +124,9 @@ app.post('/upload', upload.single('file'), (req, res) => {
     .on('end', () => {
 
       console.log("il primo oggetto:",dati.slice(0, 1), "\n"); // LOG di DEBUG -----------|
-
-      const csvFileName = req.file.filename;                        // estrazione del nome file
-      const jsonFileName = csvFileName.replace(/\.csv$/i, '.json'); // rinomino l'estensione del file
-
       console.log("csvNameFile: [",csvFileName ,"]\n"); // LOG di DEBUG -----------|
 /* ------------------------------------------------------------------------------------------------------------------------*/
-      // Oggetto da Salvare -------------------------|
+      // OPENDATA: Oggetto da Salvare -------------------------|
       const outputObject = {
         citta: citta, 
         ente: ente,
@@ -121,15 +139,17 @@ app.post('/upload', upload.single('file'), (req, res) => {
       const outputPath = path.join(__dirname, 'upload', jsonFileName);
       console.log("OutputPath:["+outputPath+"]");
 
-      // Salvo come oggetto JSON
+      // Scrivo come oggetto JSON
       fs.writeFile(outputPath, JSON.stringify(outputObject, null, 2), (err) => {
         if (err) {  // in caso di errore stampo la risposta catturata
-          console.error('Errore nel salvataggio del file JSON:' + err); 
-          return res.type('text/plain').status(500).send('Errore nel salvataggio del file JSON.');
+          console.error('Errore nella scrittura del file JSON:' + err); 
+          return res.type('text/plain').status(500).send('Errore nella scrittura del file JSON.');
         }
+        else    
+          console.log('File JSON scritto correttamente su:', outputPath);
 
       // AGGINTA FILE A GESTORE DI FILES ------------------|
-      // Creo l'obj del file corrente
+      // FILES: Creo l'obj del file corrente
       const newFile = {   
         filename: jsonFileName, 
             path: path.join('upload', jsonFileName),
@@ -148,8 +168,8 @@ app.post('/upload', upload.single('file'), (req, res) => {
         else console.log('File CSV rimosso:', csvFilePath);
       });
 
-        console.log('File JSON salvato:', outputPath);
-        res.type('text/plain').status(200).send('File caricato e converito correttamente!');
+        
+        res.type('text/plain').status(201).send('File caricato e converito correttamente!');
       });
     }) // END 
 
@@ -159,7 +179,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
       res.type('text/plain').status(500).send('Errore nel parsing del CSV.');
     });
 
-});
+}); // END Handler
 
 // Endpoint per aggiungere un nuovo elemento
 app.post('/newItem', (req, res) => {
@@ -203,7 +223,7 @@ app.get('/upload/data', (req, res) => {
 // ----------------------------------------------------------------------------------------------|
 
 // Endpoint GET leggere i files ------------------------------------------------|
-app.get('/upload/files', (req,res) => {
+app.get('/get/files', (req,res) => {
 
   try{
     const files = fs.readFileSync('./upload/files.json', 'utf8');

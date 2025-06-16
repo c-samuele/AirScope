@@ -4,7 +4,7 @@ const debug = true;
 
 // Gestione del menu con link attivo -----------------------------------------|
 document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
-  link.addEventListener('click', function () {
+  link.addEventListener('click',  function() {
     //  Rimuovo active da tutti i link
     document.querySelectorAll('#menu-nav .nav-link').forEach(item => {
       item.classList.remove('active');
@@ -37,7 +37,7 @@ switch(type) {
     }
 
     // Uso JQuery per caricare il contenuto via AJAX (Asynchronous JavaScript and XML))
-    container.load("services/dashboard.html", () => { // accetta come parametro 
+    container.load("services/dashboard.html", () => {
       // Calcolo la media e aggiorno i valori
       avgMetricsGenerate('/upload/data',  // endpoint get per i dati
                           debug);         // debug mode
@@ -78,7 +78,8 @@ switch(type) {
       document.getElementById('form-send').addEventListener('submit', async (e) => {
         // Blocco per gestirlo via AJAX
         e.preventDefault();
-        // FormData contiene i dati del form
+
+        // contiene i dati del form (citta,ente,fileCsv)
         const formData = new FormData(e.target);
 
         try {
@@ -91,7 +92,7 @@ switch(type) {
           // LOG di Response --------------|
           const text = await res.text();
 
-          if(res.status!=200)
+          if(!res.ok)
             showToast('error',text);
           else
             showToast('success',text);
@@ -101,7 +102,7 @@ switch(type) {
 
         // Catturo eventuali errori
         } catch (err) {
-          showToast('error','Errore nel caricamento: '+ err);
+          showToast('error','Errore nel caricamento: ' + err);
           if(debug)
             console.error('Errore nel caricamento:', err);
         }
@@ -113,7 +114,10 @@ switch(type) {
 
       e.preventDefault(); // blocco il caricamento pagina
 
-      const form = e.target;
+      const form = e.target; // restituisce il form html per accedervi ai singoli valori tramite name="valore"
+
+      if(debug)
+        console.log(form);
 
       const newItem = {
         data: form.data.value,
@@ -124,6 +128,9 @@ switch(type) {
           o3: form.o3.value,
         pm10: form.pm10.value
       };
+
+      if(debug)
+        console.log(newItem);
 
       fetch('/newItem', {
         method: 'POST',
@@ -136,7 +143,9 @@ switch(type) {
       });
       // end ----------------------------------------------------------- //
 
-      tableFilesGenerate('/upload/files',debug);
+
+    // Tabella dei file caricati
+    tableFilesGenerate('/get/files',debug);
 
     });
     break;
