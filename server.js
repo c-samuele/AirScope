@@ -215,7 +215,6 @@ app.post('/newItem', (req, res) => {
 // Endpoint GET per leggere opendata da DATA_PATH ------------------------------------------------|
 app.get('/upload/data', (req, res) => {
 
-  // poichè sync è bloccante
   try{
     // Legge il contenuto del file come stringa 
     const data = fs.readFileSync(DATA_PATH);
@@ -264,14 +263,14 @@ app.delete('/delete/:data/:ora', (req, res) => {
 
   fs.readFile(DATA_PATH, 'utf8', (err, fileData) => {
     if (err) {
-      res.status(500).type('text/plain').send('Errore apertura file');
+      res.status(500).type('text/plain').send('Errore lettura file');
       return;
     }
 
     let dataSet = JSON.parse(fileData);
 
     // Rimuovi gli elementi con data e ora corrispondenti
-    dataSet.dati = dataSet.dati.filter(el => !(el.data === dataParam && el.ora === oraParam));
+    dataSet.dati = dataSet.dati.filter(el => !((el.data === dataParam) && (el.ora === oraParam)));
 
     fs.writeFile(DATA_PATH, JSON.stringify(dataSet, null, 2), (err) => {
       if (err) {
@@ -283,6 +282,51 @@ app.delete('/delete/:data/:ora', (req, res) => {
   });
 });
 // ----------------------------------------------------------------------------------------------|
+
+// Endpoint PUT per modificare i valori
+app.put('/edit/:data/:ora', (req,res)=>{
+  
+  fs.readFile(DATA_PATH,'utf8',(err,fileData)=>{
+  if(err){
+    res.status(500).type('text/plain').send('Errore lettura file');
+    return;
+  }
+
+console.log("BODY:", req.body);
+console.log("PARAMS:", req.params);
+
+  console.log(fileData);  
+
+  let dataSet = JSON.parse(fileData);
+
+  const entry = dataSet.dati.find(item => (item.data === req.params.data) && (item.ora === req.params.ora));
+console.log("ENTRY:", entry);
+    if (!entry) {
+      res.status(404).type('text/plain').send('Entry non trovata');
+      return;
+    }
+    else{
+      // modifico i valori tramite il riferimento creato
+      entry.co = req.body.co;
+      entry.no2 = req.body.no2;
+      entry.nox = req.body.nox;
+      entry.o3 = req.body.o3;
+      entry.pm10 = req.body.pm10;
+    }
+
+    fs.writeFile(DATA_PATH,JSON.stringify(dataSet,null,2),(err) => {
+
+      if(err){
+        res.status(500).type('text/plain').send('Errore in scrittura');
+        return
+      }
+      else{
+      res.status(200).type('text/plain').send('Modifica Effettuata!');
+      }
+    });
+  });
+});
+
 
 
 app.listen(3000, () => {

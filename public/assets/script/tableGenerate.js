@@ -19,12 +19,23 @@ function tableGenerate(database,  // Endpoint GET
           tr.appendChild(td);
         });
 
+        // Bottone per modificare
+        const tdEdit = document.createElement('td');
+
+        tdEdit.innerHTML = '<button class="btn btn-primary"><i class="bi bi-pencil-square"></i></button>';
+
+        tdEdit.addEventListener('click', () => {
+          showModal(item.data,item.ora,database,debug);
+          });
+         tr.appendChild(tdEdit);
+
+
         // Bottone per eliminare
-        const tdActionDelete = document.createElement('td');
+        const tdDelete = document.createElement('td');
 
-        tdActionDelete.innerHTML = '<button class="btn btn-danger"><i class="bi bi-x-circle"></i></button>';
+        tdDelete.innerHTML = '<button class="btn btn-danger"><i class="bi bi-x-circle"></i></button>';
 
-        tdActionDelete.addEventListener('click', () => {
+        tdDelete.addEventListener('click', () => {
         // if (confirm(`Eliminare la misurazione: [${item.data} ${item.ora}] ?`)){
           fetch(`/delete/${item.data}/${item.ora}`, { method: 'DELETE' })
             .then(response => {
@@ -44,7 +55,7 @@ function tableGenerate(database,  // Endpoint GET
           //  }
           });
     
-        tr.appendChild(tdActionDelete);
+        tr.appendChild(tdDelete);
         tbody.appendChild(tr);
       });
     });

@@ -14,7 +14,7 @@ function showToast(type,        // tipo di sfondo
     const classToUse = types[type] || types.default;
 
     // Creo il toast con type e message personalizzati
-    const elementHtml = `
+    const toastHtml = `
 <div class="toast align-items-center border-0 ${classToUse}" role="alert" aria-live="assertive" aria-atomic="true">
   <div class="d-flex">
     <div class="toast-body">
@@ -25,7 +25,7 @@ function showToast(type,        // tipo di sfondo
 </div>`;
 
     // Converto in elemento jQuery
-    const $toast = $(elementHtml);
+    const $toast = $(toastHtml);
 
     // Aggiungo al contenitore
     $('#toast-container').append($toast);

@@ -29,7 +29,7 @@
                 <section class="d-flex flex-row w-100">
                     <div class="me-3 flex-grow-1">
                         <label for="date-m" class="form-label text-light">Data</label>
-                        <input name="data" id="date-m" type="date" class="form-control text-white bg-transparent mb-3 me-3" required>
+                        <input name="data" id="date-m" type="date" min="1900-12-31" max="2099-12-31" class="form-control text-white bg-transparent mb-3 me-3" required>
                     </div>
                     <div class="flex-grow-1">
                         <label for="time-m" class="form-label text-light">Ora</label>
@@ -78,7 +78,7 @@
                         <th>Nome File</th>
                         <th>Città</th>
                         <th>Ente</th>
-                        <th width="48px">Azioni</th>
+                        <th width="24px">Delete</th>
                     </tr>
                 </thead>
                 <tbody>
