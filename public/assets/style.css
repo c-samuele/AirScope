@@ -31,6 +31,11 @@ h2{
 hr{
   background-color: var(--bs-border-color);
 }
+
+main{
+  overflow: hidden;
+  height: 100vh;
+}
 /* ----------- END TAG ----------- */
 
 
@@ -87,6 +92,7 @@ hr{
 #main-section{
   background-color: #1a1c1d;
   box-shadow: inset 5px 0 120px rgba(0, 0, 0, 0.8);
+  overflow-y: auto;
 }
 /* ----------- END SEZIONE PRINCIPALE PAGINA ----------- */
 

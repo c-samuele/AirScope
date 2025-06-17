@@ -25,7 +25,7 @@ function tableGenerate(database,  // Endpoint GET
         tdActionDelete.innerHTML = '<button class="btn btn-danger"><i class="bi bi-x-circle"></i></button>';
 
         tdActionDelete.addEventListener('click', () => {
-        if (confirm(`Eliminare la misurazione: [${item.data} ${item.ora}] ?`)){
+        // if (confirm(`Eliminare la misurazione: [${item.data} ${item.ora}] ?`)){
           fetch(`/delete/${item.data}/${item.ora}`, { method: 'DELETE' })
             .then(response => {
               if (response.ok) {
@@ -41,7 +41,8 @@ function tableGenerate(database,  // Endpoint GET
               }
             })
             .catch(e => showToast('error', `Errore generico: ${e}`));
-        }});
+          //  }
+          });
     
         tr.appendChild(tdActionDelete);
         tbody.appendChild(tr);

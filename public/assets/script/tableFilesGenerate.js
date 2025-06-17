@@ -26,7 +26,7 @@ function tableFilesGenerate(files, debug) {
               .then(response => {
                 if (response.ok) {
                   showToast('success', "File eliminato con successo!");
-                  tableGenerate(files, debug);
+                  tableFilesGenerate(files, debug);
                 } else {
                   showToast('error', "Errore durante l'eliminazione!");
                 }
@@ -40,5 +40,3 @@ function tableFilesGenerate(files, debug) {
       });
     });
 }
-
-// 31

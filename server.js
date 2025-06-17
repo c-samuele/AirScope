@@ -21,16 +21,17 @@ app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstra
 
 // Script --------------------------------------------------------------------|
 const {normalizeDate,normalizeTime} = require('./utils/normalize.js');
-const {readFilesList,addFileList} = require('./utils/filesAddAndRead.js');
+const {readFilesList,addFileList,removeFile} = require('./utils/filesUtility.js');
+const {removeDataFile} = require('./utils/dataUtility.js');
 
 
 // per inviare richieste con body json
 app.use(express.json());
 
 
-// CREO il file per la GESTIONE DEI FILES --------------------------------------|
 const FILES_LIST_PATH = path.join(__dirname, 'upload', 'files.json'); // Percorso completo del file JSON che conterrà la lista dei file caricati
 
+// CREO il file per la GESTIONE DEI FILES --------------------------------------|
 // Controllo se il file.json esiste già nella cartella /upload
 if (!fs.existsSync(FILES_LIST_PATH)) {
   fs.writeFileSync(FILES_LIST_PATH, '[]', 'utf8');  // Se NON esiste, lo CREO con un array vuoto
@@ -51,11 +52,11 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-// END MULTER ------------------------------------------------------------------------|
 
-// -------------------------------------------------------- ENDPOINT --------------------------------------------------------|
+
+// ****************************** ENDPOINT ******************************|
+
 // REQUEST ---------------------------------------------------------------------------|
-
 // Endpoint POST per il caricamento file
 app.post('/upload', upload.single('file'), (req, res) => {
 
@@ -84,7 +85,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 // -- Controllo se esiste già -------------------------------|
   const jsonFileName = req.file.filename.replace(/\.csv$/i, '.json');
 
-  const files = readFilesList();  // ottengo l'array di file
+  const files = readFilesList();  // ottengo l'array di oggetti
 
   // Log per debug del confronto
   console.log("\n|---------Match:---------|\n");
@@ -94,8 +95,10 @@ app.post('/upload', upload.single('file'), (req, res) => {
   if (files.some(f => f.filename === jsonFileName)) { 
     // elimino il file csv già presente che multer ha già caricato in automatico in storage precedentemente definito
     fs.unlink(csvFilePath, (err) => {
-            if (err) console.warn('Errore nella rimozione del file CSV: '+ err);
-            else console.log('File CSV rimosso:', csvFilePath);
+            if (err) 
+              console.error('Errore nella rimozione del file CSV: ', err);
+            else 
+              console.log('File CSV rimosso:', csvFilePath);
           });
     return res.status(400).type('text/plain').send('File già esistente!'); 
   }
@@ -110,15 +113,15 @@ app.post('/upload', upload.single('file'), (req, res) => {
                            trim: true       // Rimuovo spazi iniziali/finali
                           }))
     // 'data' - Ad ogni nuovo chunk disponibile (oggetto completo)
-    .on('data', (row) => { // row sarebbe il chunk ricevuto dall'evento 'data' dello stream appena parsato
+    .on('data', (chunk) => { // chunk ricevuto dall'evento 'data' dello stream appena parsato
         // normalizzo la data
-        if (row.data) 
-          row.data = normalizeDate(row.data);
+        if (chunk.data) 
+          chunk.data = normalizeDate(chunk.data);
         // normalizzo l'orario
-        if (row.ora) 
-          row.ora = normalizeTime(row.ora);
+        if (chunk.ora) 
+          chunk.ora = normalizeTime(chunk.ora);
       // aggiungo all'array l'oggetto js normalizzato
-      dati.push(row);
+      dati.push(chunk);
     })
     // 'end' - Alla fine dello stream (esauriti i chunk) 
     .on('end', () => {
@@ -130,7 +133,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
       const outputObject = {
         citta: citta, 
         ente: ente,
-        fileJson: jsonFileName,
+        filename: jsonFileName,
         dati: dati
       };
       // --------------------------------------------|
@@ -164,7 +167,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
       // cancello il .csv da /Update
       fs.unlink(csvFilePath, (err) => {
-        if (err) console.warn('Errore nella rimozione del file CSV: '+ err);
+        if (err) console.error('Errore nella rimozione del file CSV: '+ err);
         else console.log('File CSV rimosso:', csvFilePath);
       });
 
@@ -183,6 +186,8 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 // Endpoint per aggiungere un nuovo elemento
 app.post('/newItem', (req, res) => {
+
+// +++++++ DEVO IMPLEMENTARE ANCORA LA NORMALIZZAZIONE DATA e ORA --- già fatto sull /upload (manca solo quì)
   
   const newItem = req.body;   // elemento da aggiungere
   console.log('Nuovo item ricevuto:', newItem);
@@ -216,7 +221,7 @@ app.get('/upload/data', (req, res) => {
     const data = fs.readFileSync(DATA_PATH);
     res.type('application/json').status(200).send(data);
   }catch(e){
-    console.log("Errore lettura: " + e);
+    console.error("Errore lettura: " + e);
     res.type('text/plain').status(500).send("Errore nella lettura del file");
   }
 });
@@ -229,22 +234,27 @@ app.get('/get/files', (req,res) => {
     const files = fs.readFileSync('./upload/files.json', 'utf8');
     res.type('application/json').status(200).send(files);
   }catch(e){
-    console.log("Errore lettura: " + e);
+    console.error("Errore lettura: ",e);
     res.type('text/plain').status(500).send("Errore nella lettura del gestore files");
   }
 
 });
 
+// Endpoint per rimuovere un file caricato -----------------------------------------------------|
 app.delete('/deletefiles/:nome',(req,res) => {
-  try{
-  let files = readFilesList();
-  
-  }catch(e){
+  removeDataFile(req.params.nome);
+try{
+  // Eliminare i dati.json
+  removeDataFile(req.params.nome);
+  // Elimino il riferimento da files.json
+  removeFile(req.params.nome);
 
-  }
-
+  res.status(200).type('text/plain').send("File eliminato con successo!");
+}catch(e){
+  res.status(400).type('text/plain').send("Errore durante l'eliminazione");
+}
 });
-
+// ----------------------------------------------------------------------------------------------|
 
 
 // Endpoint DELETE per rimuovere una misurazione tramite DATA e ORA -----------------------------|

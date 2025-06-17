@@ -1,12 +1,17 @@
 // funzione per normalizzare la data nel caricamento file
 function normalizeDate(data) {
-  if (data.includes('/')) {
-    let [dd, mm, yyyy] = data.split('/');
-    dd = dd.padStart(2, '0');
-    mm = mm.padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
-  }
-  return data;
+  let block;
+
+  if (data.includes('/'))
+    block = data.split('/');
+  else 
+    block = data.split('-'); 
+
+  let giorno = block[0];
+  let mese = block[1];
+  let anno = block[2] ? block[2].substring(0, 4) : '';
+
+  return `${anno}-${mese}-${giorno}`;
 }
 
 // funzione per normalizzare la l'orario nel caricamento file

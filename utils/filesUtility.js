@@ -8,7 +8,7 @@ function readFilesList() {
     const content = fs.readFileSync(FILES_LIST_PATH, 'utf8');
     return JSON.parse(content); // converto in js
   } catch (e) {
-    console.error(`Impossibile leggere il ${FILES_LIST_PATH} \nErrore: ${e}`);
+    console.error(`Impossibile leggere il [${FILES_LIST_PATH}] -> [${e}]\n`);
     return [];
   }
 }
@@ -23,10 +23,25 @@ function addFileList(newFile) {
 
     // scrivo sul filesystem trasformandolo in stringa JSON
     fs.writeFileSync(FILES_LIST_PATH, JSON.stringify(filesList, null, 2));
-    console.log(`Riferimento file aggiunto a ${FILES_LIST_PATH}`);
+    console.log(`Riferimento al file aggiunto su: [${FILES_LIST_PATH}]\n`);
   } catch (e) {
-    console.error(`Errore aggiungendo file a files.json \nErrore: ${e}`);
+    console.error(`Errore aggiungendo il file a files.json -> [${e}]\n`);
   }
 }
 
-module.exports = {readFilesList,addFileList};
+function removeFile(nome) {
+  try {
+    let filesList = readFilesList();
+
+    filesList = filesList.filter(f => f.filename !== nome);
+
+    fs.writeFileSync(FILES_LIST_PATH, JSON.stringify(filesList, null, 2));
+    console.log(`File [${nome}] rimosso da [${FILES_LIST_PATH}]\n`);
+  } catch (e) {
+    console.error(`Errore rimuovendo il file da files.json -> [${e}]\n`);
+  }
+}
+
+
+
+module.exports = {readFilesList,addFileList,removeFile};

@@ -94,9 +94,10 @@ switch(type) {
 
           if(!res.ok)
             showToast('error',text);
-          else
+          else{
+            tableFilesGenerate('/get/files', debug);
             showToast('success',text);
-
+          }
           if(debug) // Debug ---------------|
             console.log(text);
 

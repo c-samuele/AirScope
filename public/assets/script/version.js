@@ -1,5 +1,5 @@
 // Versione --------------------------------------------------------------|
-const version = "v1.2.9";
+const version = "v1.3.10";
 const versionElements = document.querySelectorAll(".version-number");
 
 for (const el of versionElements) {

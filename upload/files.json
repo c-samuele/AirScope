@@ -4,11 +4,5 @@
     "path": "upload/dacaricare.json",
     "citta": "Urbino",
     "ente": "Arpa"
-  },
-  {
-    "filename": "dacaricare_breve.json",
-    "path": "upload/dacaricare_breve.json",
-    "citta": "Urbino",
-    "ente": "Arpa"
   }
 ]
