@@ -1,4 +1,7 @@
-function showModal(data,ora,database,debug){
+function showModal(data,ora,database,debug,filename){
+
+if(debug)
+    console.log(`\nshowModal > filename = ${filename}`);
 
 const modalHtml = `
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -62,7 +65,7 @@ const bodyRequest = {
     pm10: parseFloat(formHtml.pm10.value)
 }; 
 
-fetch(`/edit/${data}/${ora}`, { 
+fetch(`/edit/${data}/${ora}/${localStorage.getItem(filename)}`, { 
         method: 'PUT',
         headers: {'content-type':'application/json'},
         body:JSON.stringify(bodyRequest)
@@ -71,7 +74,7 @@ fetch(`/edit/${data}/${ora}`, {
 .then(response => {
     if (response.ok) {
     showToast('success',"Misurazione modificata con successo!");
-    tableGenerate(database, debug);
+    tableGenerate(database, debug,filename);
     // Distruggo il chart
     if (Chart.getChart("chart")) 
         Chart.getChart("chart").destroy();

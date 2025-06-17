@@ -2,6 +2,9 @@
 const debug = true;
 // ---------------------------------------------------------------------------|
 
+// Chiave del local storage per vedere il file in uso
+const fileInUse = "fileInUse";
+
 // Gestione del menu con link attivo -----------------------------------------|
 document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
   link.addEventListener('click',  function() {
@@ -31,6 +34,9 @@ switch(type) {
   // SERVIZIO DASHBOARD
   case "dashboard":
 
+    if(!localStorage.getItem(fileInUse))
+      showToast('info',"Caricare o selezionare un file!");
+
     if(debug){
       console.clear();
       console.log(`DEBUG MODE: [${debug}]`);
@@ -39,7 +45,7 @@ switch(type) {
     // Uso JQuery per caricare il contenuto via AJAX (Asynchronous JavaScript and XML))
     container.load("services/dashboard.html", () => {
       // Calcolo la media e aggiorno i valori
-      avgMetricsGenerate('/upload/data',  // endpoint get per i dati
+      avgMetricsGenerate(`/upload/data/${localStorage.getItem(fileInUse)}`,  // endpoint get per i dati
                           debug);         // debug mode
 
     });     
@@ -47,6 +53,9 @@ switch(type) {
 
   // SERVIZIO ANALISI
   case "analitics":
+  if(!localStorage.getItem('fileInUse'))
+    showToast('info',"Caricare o selezionare un file!");
+
 
     if(debug){
       console.clear();
@@ -55,17 +64,24 @@ switch(type) {
     // Funzione per caricare il contenuto html del servizio con JQuery
     container.load("services/analytics.html", () => {
       // Funzione per generare il grafico
-      chartGenerate('/upload/data',   // endpoint get per i dati
+      chartGenerate(`/upload/data/${localStorage.getItem(fileInUse)}`,   // endpoint get per i dati
                      debug);          // debug mode
-        
+
+      if(debug)
+        console.log(`main > fileInUse = ${fileInUse}`);
+
       // Funzione per popolare la tabella con i valori del database
-      tableGenerate('/upload/data',   // endpoint get per i dati
-                     debug);          // debug mode
+      tableGenerate(`/upload/data/${localStorage.getItem(fileInUse)}`,   // endpoint get per i dati con param fileInUse
+                     debug,                                              // debug mode
+                    fileInUse);                                          // STRINGA! nome file in uso da passare a showModal
     });
   break;
 
   // SERVIZIO RICHIESTA
   case "request":
+
+  if(!localStorage.getItem(fileInUse))
+      showToast('info',"Caricare o selezionare un file!");
 
     if(debug){
       console.clear();
@@ -92,8 +108,9 @@ switch(type) {
           // LOG di Response --------------|
           const text = await res.text();
 
-          if(!res.ok)
+          if(!res.ok){
             showToast('error',text);
+          }
           else{
             tableFilesGenerate('/get/files', debug);
             showToast('success',text);
@@ -121,8 +138,9 @@ switch(type) {
         console.log(form);
 
       const newItem = {
+    filename: localStorage.getItem('fileInUse'),
         data: form.data.value,
-        ora: form.ora.value,
+         ora: form.ora.value,
           co: form.co.value,
          no2: form.no2.value,
          nox: form.nox.value,

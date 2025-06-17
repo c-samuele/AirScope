@@ -8,7 +8,7 @@ const csvParse = require('csv-parse'); // Per convertire csv in json
 const app = express();                        // Crea un'app Express
 const PORT = 3000;                            // Porta su cui il server ascolta
 
-const DATA_PATH = './upload/dacaricare.json'; // PATH di salvataggio dati
+const UPLOAD_PATH = './upload/'; // PATH di salvataggio dati
 
 app.use(express.static('public'));     // direttiva file statici
 
@@ -186,13 +186,16 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 // Endpoint per aggiungere un nuovo elemento
 app.post('/newItem', (req, res) => {
-
-// +++++++ DEVO IMPLEMENTARE ANCORA LA NORMALIZZAZIONE DATA e ORA --- già fatto sull /upload (manca solo quì)
-  
-  const newItem = req.body;   // elemento da aggiungere
-  console.log('Nuovo item ricevuto:', newItem);
+  // elemento da aggiungere
+  const newItem = req.body;   
+  // Salvo il file su cui operare
+  const fileInUse = newItem.filename;
+  // Elimino il nome che non serve tra le misurazioni
+  delete newItem.fileInUse;
+  console.log('File in uso:',fileInUse,'\n');
+  console.log('Nuovo item ricevuto:', newItem,'\n');
   // Lettura db
-  fs.readFile(DATA_PATH, 'utf8', (err, data) => {
+  fs.readFile(path.join(UPLOAD_PATH,fileInUse), 'utf8', (err, data) => {
     if (err) return res.status(500).json({ error: 'Errore lettura DB' });
 
     // converto in oggetto js
@@ -201,7 +204,7 @@ app.post('/newItem', (req, res) => {
     database.dati.push(newItem); // aggiungo l'elemento 
 
     // scrivo le modifiche in json
-    fs.writeFile(DATA_PATH, JSON.stringify(database, null, 2), (err) => {
+    fs.writeFile(path.join(UPLOAD_PATH,fileInUse), JSON.stringify(database, null, 2), (err) => {
       if (err) return res.status(500).json({ error: 'Errore scrittura DB' });
       // risposta server sucess
       res.status(200).json({ message: 'Misurazione aggiunta con successo!' });
@@ -212,12 +215,12 @@ app.post('/newItem', (req, res) => {
 // END REQUEST ----------------------------------------------------------------------------------|
 
 
-// Endpoint GET per leggere opendata da DATA_PATH ------------------------------------------------|
-app.get('/upload/data', (req, res) => {
+// Endpoint GET per leggere il file in uso ------------------------------------------------|
+app.get('/upload/data/:filename', (req, res) => {
 
   try{
     // Legge il contenuto del file come stringa 
-    const data = fs.readFileSync(DATA_PATH);
+    const data = fs.readFileSync(path.join(UPLOAD_PATH,req.params.filename));
     res.type('application/json').status(200).send(data);
   }catch(e){
     console.error("Errore lettura: " + e);
@@ -257,11 +260,11 @@ try{
 
 
 // Endpoint DELETE per rimuovere una misurazione tramite DATA e ORA -----------------------------|
-app.delete('/delete/:data/:ora', (req, res) => {
+app.delete('/delete/:data/:ora/:filename', (req, res) => {
   const dataParam = req.params.data;
   const oraParam = req.params.ora;
 
-  fs.readFile(DATA_PATH, 'utf8', (err, fileData) => {
+  fs.readFile(path.join(UPLOAD_PATH,req.params.filename), 'utf8', (err, fileData) => {
     if (err) {
       res.status(500).type('text/plain').send('Errore lettura file');
       return;
@@ -272,7 +275,7 @@ app.delete('/delete/:data/:ora', (req, res) => {
     // Rimuovi gli elementi con data e ora corrispondenti
     dataSet.dati = dataSet.dati.filter(el => !((el.data === dataParam) && (el.ora === oraParam)));
 
-    fs.writeFile(DATA_PATH, JSON.stringify(dataSet, null, 2), (err) => {
+    fs.writeFile(path.join(UPLOAD_PATH,req.params.filename), JSON.stringify(dataSet, null, 2), (err) => {
       if (err) {
         res.status(500).type('text/plain').send('Errore salvataggio file');
         return;
@@ -284,25 +287,24 @@ app.delete('/delete/:data/:ora', (req, res) => {
 // ----------------------------------------------------------------------------------------------|
 
 // Endpoint PUT per modificare i valori
-app.put('/edit/:data/:ora', (req,res)=>{
+app.put('/edit/:data/:ora/:filename', (req,res)=>{
   
-  fs.readFile(DATA_PATH,'utf8',(err,fileData)=>{
+  fs.readFile(path.join(UPLOAD_PATH,req.params.filename),'utf8',(err,fileData)=>{
   if(err){
     res.status(500).type('text/plain').send('Errore lettura file');
     return;
   }
 
-console.log("BODY:", req.body);
-console.log("PARAMS:", req.params);
-
-  console.log(fileData);  
+  // console.log("BODY:", req.body);
+  // console.log("PARAMS:", req.params);
+  // console.log(fileData);  
 
   let dataSet = JSON.parse(fileData);
 
   const entry = dataSet.dati.find(item => (item.data === req.params.data) && (item.ora === req.params.ora));
-console.log("ENTRY:", entry);
+console.log("Misurazione da modificare :", entry);
     if (!entry) {
-      res.status(404).type('text/plain').send('Entry non trovata');
+      res.status(404).type('text/plain').send('Misurazione non trovata');
       return;
     }
     else{
@@ -314,7 +316,7 @@ console.log("ENTRY:", entry);
       entry.pm10 = req.body.pm10;
     }
 
-    fs.writeFile(DATA_PATH,JSON.stringify(dataSet,null,2),(err) => {
+    fs.writeFile(path.join(UPLOAD_PATH,req.params.filename),JSON.stringify(dataSet,null,2),(err) => {
 
       if(err){
         res.status(500).type('text/plain').send('Errore in scrittura');

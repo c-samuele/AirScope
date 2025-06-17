@@ -4,5 +4,11 @@
     "path": "upload/dacaricare.json",
     "citta": "Urbino",
     "ente": "Arpa"
+  },
+  {
+    "filename": "dacaricare_tagliato.json",
+    "path": "upload/dacaricare_tagliato.json",
+    "citta": "Urbino",
+    "ente": "Arpa"
   }
 ]

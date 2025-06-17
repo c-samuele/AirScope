@@ -6,7 +6,7 @@ function showToast(type,        // tipo di sfondo
     const types = {
         success: 'bg-success text-white',
         error: 'bg-danger text-white',
-        info: 'bg-info text-white',
+        info: 'bg-info text-dark',
         default: 'bg-primary text-white'
     };
 
