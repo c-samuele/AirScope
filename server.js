@@ -19,7 +19,7 @@ app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist
 app.use('/chart', express.static(path.join(__dirname, 'node_modules/chart.js/dist')));
 app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist')));
 
-// Script --------------------------------------------------------------------|
+// Server utils --------------------------------------------------------------------|
 const {normalizeDate,normalizeTime} = require('./utils/normalize.js');
 const {readFilesList,addFileList,removeFile} = require('./utils/filesUtility.js');
 const {removeDataFile} = require('./utils/dataUtility.js');
@@ -129,7 +129,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
       console.log("il primo oggetto:",dati.slice(0, 1), "\n"); // LOG di DEBUG -----------|
       console.log("csvNameFile: [",csvFileName ,"]\n"); // LOG di DEBUG -----------|
 /* ------------------------------------------------------------------------------------------------------------------------*/
-      // OPENDATA: Oggetto da Salvare -------------------------|
+      // Oggetto da Salvare -------------------------|
       const outputObject = {
         citta: citta, 
         ente: ente,
@@ -164,11 +164,12 @@ app.post('/upload', upload.single('file'), (req, res) => {
       addFileList(newFile);  
       // END AGGINTA A GESTORE ----------------------------|
 
-
       // cancello il .csv da /Update
       fs.unlink(csvFilePath, (err) => {
-        if (err) console.error('Errore nella rimozione del file CSV: '+ err);
-        else console.log('File CSV rimosso:', csvFilePath);
+        if (err) 
+          console.error('Errore nella rimozione del file CSV: '+ err);
+        else 
+          console.log('File CSV rimosso:', csvFilePath);
       });
 
         
@@ -243,13 +244,13 @@ app.get('/get/files', (req,res) => {
 });
 
 // Endpoint per rimuovere un file caricato -----------------------------------------------------|
-app.delete('/deletefiles/:nome',(req,res) => {
-  removeDataFile(req.params.nome);
+app.delete('/deletefiles/:name',(req,res) => {
+  removeDataFile(req.params.name);
 try{
   // Eliminare i dati.json
-  removeDataFile(req.params.nome);
+  removeDataFile(req.params.name);
   // Elimino il riferimento da files.json
-  removeFile(req.params.nome);
+  removeFile(req.params.name);
 
   res.status(200).type('text/plain').send("File eliminato con successo!");
 }catch(e){

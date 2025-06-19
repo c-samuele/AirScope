@@ -15,9 +15,9 @@ function avgMetricsGenerate (database,    // Endpoint per i dati
   let maxValue = {
       "co":10,
      "no2":40,
-     "nox":100,
+     "nox":30,
       "o3":120,
-    "pm10":50
+    "pm10":35
   }
 
     fetch(database)
