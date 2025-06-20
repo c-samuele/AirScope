@@ -1,16 +1,16 @@
 {
   "citta": "Urbino",
   "ente": "Arpa",
-  "filename": "dacaricare.json",
+  "filename": "dati_maggio_c.json",
   "dati": [
     {
       "data": "2025-05-12",
       "ora": "03:00",
-      "co": null,
-      "no2": null,
-      "nox": null,
-      "o3": null,
-      "pm10": null
+      "co": "0.5",
+      "no2": "12",
+      "nox": "19",
+      "o3": "72",
+      "pm10": "9"
     },
     {
       "data": "2025-05-12",

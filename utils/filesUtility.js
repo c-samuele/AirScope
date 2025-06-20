@@ -29,6 +29,7 @@ function addFileList(newFile) {
   }
 }
 
+// rimuove il riferimento salvato in files.json
 function removeFile(nome) {
   try {
     let filesList = readFilesList();

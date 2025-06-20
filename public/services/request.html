@@ -7,7 +7,7 @@
     <div class="col-lg-5 col-md-12">
         <h2>Carica Open data</h2>
         <div class="form-api d-flex flex-column rounded-3 p-3">        
-            <form id="form-send" action="/upload" method="POST" enctype="multipart/form-data">
+            <form id="form-send" action="/files" method="POST" enctype="multipart/form-data">
                 <input type="text" class="form-control text-white bg-transparent mb-3" name="citta" placeholder="Città" required>
                 <input type="text" class="form-control text-white bg-transparent mb-3" name="ente" placeholder="Ente" required>
                 <input class="form-control bg-transparent mb-3" type="file" name="file" required>
@@ -25,7 +25,7 @@
     <div class="col-lg-7 col-md-12 space-mobile">
         <h2>Aggiungi misurazione</h2>
         <div class="form-api d-flex flex-column rounded-3 p-3">
-            <form id="form-mod" action="/newItem" method="POST">
+            <form id="form-mod">
                 <section class="d-flex flex-row w-100">
                     <div class="me-3 flex-grow-1">
                         <label for="date-m" class="form-label text-light">Data</label>

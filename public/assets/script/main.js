@@ -6,16 +6,23 @@ const debug = true;
 const fileInUse = "fileInUse";
 
 // Gestione del menu con link attivo -----------------------------------------|
-document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
-  link.addEventListener('click',  function() {
-    //  Rimuovo active da tutti i link
-    document.querySelectorAll('#menu-nav .nav-link').forEach(item => {
-      item.classList.remove('active');
-    });
-    // Aggiungo active solo al link cliccato
-    this.classList.add('active');
-  });
-});
+$menuLink = $('#menu-nav .nav-link');
+
+$menuLink.on('click',function() {
+  $menuLink.removeClass('active');
+  $(this).addClass('active');
+})
+
+// document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
+//   link.addEventListener('click',  function() {
+//     //  Rimuovo active da tutti i link
+//     document.querySelectorAll('#menu-nav .nav-link').forEach(item => {
+//       item.classList.remove('active');
+//     });
+//     // Aggiungo active solo al link cliccato
+//     this.classList.add('active');
+//   });
+// });
 // ---------------------------------------------------------------------------|
 
 // GENERAZIONE dei Servizi ------------------------------------------------------------------------------|
@@ -27,7 +34,7 @@ document.querySelectorAll('#menu-nav .nav-link').forEach(link => {
 
 // funzione per generare il contenuto della pagina servizio ---------------------------------------------|
 function contentGenerate(type) {
-  const container = $("#main-section");
+  const $container = $("#main-section");
   
 switch(type) {
 
@@ -43,9 +50,9 @@ switch(type) {
     }
 
     // Uso JQuery per caricare il contenuto via AJAX (Asynchronous JavaScript and XML))
-    container.load("services/dashboard.html", () => {
+    $container.load("services/dashboard.html", () => {
       // Calcolo la media e aggiorno i valori
-      avgMetricsGenerate(`/upload/data/${localStorage.getItem(fileInUse)}`,  // endpoint get per i dati
+      avgMetricsGenerate(`/files/data/${localStorage.getItem(fileInUse)}`,  // endpoint get per i dati
                           debug);         // debug mode
 
     });     
@@ -62,16 +69,16 @@ switch(type) {
       console.log(`DEBUG MODE: [${debug}]`);
     }
     // Funzione per caricare il contenuto html del servizio con JQuery
-    container.load("services/analytics.html", () => {
+    $container.load("services/analytics.html", () => {
       // Funzione per generare il grafico
-      chartGenerate(`/upload/data/${localStorage.getItem(fileInUse)}`,   // endpoint get per i dati
+      chartGenerate(`/files/data/${localStorage.getItem(fileInUse)}`,   // endpoint get per i dati
                      debug);          // debug mode
 
       if(debug)
         console.log(`main > fileInUse = ${fileInUse}`);
 
       // Funzione per popolare la tabella con i valori del database
-      tableGenerate(`/upload/data/${localStorage.getItem(fileInUse)}`,   // endpoint get per i dati con param fileInUse
+      tableGenerate(`/files/data/${localStorage.getItem(fileInUse)}`,   // endpoint get per i dati con param fileInUse
                      debug,                                              // debug mode
                     fileInUse);                                          // STRINGA! nome file in uso da passare a showModal
     });
@@ -88,7 +95,7 @@ switch(type) {
       console.log(`DEBUG MODE: [${debug}]`);
     }
      // Uso JQuery per caricare il contenuto
-    container.load("services/request.html", () => {
+    $container.load("services/request.html", () => {
 
       // Event Listener per il form carica file ------------------------- //
       document.getElementById('form-send').addEventListener('submit', async (e) => {
@@ -100,7 +107,7 @@ switch(type) {
 
         try {
           // RICHIESTA POST asincrona
-          const res = await fetch('/upload', {
+          const res = await fetch('/files', {
             method: 'POST',
             body: formData
           });
@@ -112,7 +119,7 @@ switch(type) {
             showToast('error',text);
           }
           else{
-            tableFilesGenerate('/get/files', debug);
+            tableFilesGenerate('/files/list', debug);
             showToast('success',text);
           }
           if(debug) // Debug ---------------|
@@ -138,7 +145,6 @@ switch(type) {
         console.log(form);
 
       const newItem = {
-    filename: localStorage.getItem('fileInUse'),
         data: form.data.value,
          ora: form.ora.value,
           co: form.co.value,
@@ -151,20 +157,20 @@ switch(type) {
       if(debug)
         console.log(newItem);
 
-      fetch('/newItem', {
+      fetch(`/files/measurements/${localStorage.getItem(fileInUse)}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newItem)
       })
-      .then(res => res.json())
-      .then(data => showToast("success",data.message))
+      .then(res => res.text())
+      .then(textMessage => showToast("success",textMessage))
       .catch(err => showToast('error','Errore: ' + err));
       });
       // end ----------------------------------------------------------- //
 
 
     // Tabella dei file caricati
-    tableFilesGenerate('/get/files',debug);
+    tableFilesGenerate('/files/list',debug);
 
     });
     break;

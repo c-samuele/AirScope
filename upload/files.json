@@ -1,13 +1,19 @@
 [
   {
-    "filename": "dacaricare.json",
-    "path": "upload/dacaricare.json",
+    "filename": "dati_maggio_c.json",
+    "path": "upload/dati_maggio_c.json",
     "citta": "Urbino",
     "ente": "Arpa"
   },
   {
-    "filename": "dacaricare_tagliato.json",
-    "path": "upload/dacaricare_tagliato.json",
+    "filename": "dati_maggio_t.json",
+    "path": "upload/dati_maggio_t.json",
+    "citta": "Urbino",
+    "ente": "Arpa"
+  },
+  {
+    "filename": "dati_giugno_t.json",
+    "path": "upload/dati_giugno_t.json",
     "citta": "Urbino",
     "ente": "Arpa"
   }

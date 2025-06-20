@@ -16,23 +16,23 @@ const modalHtml = `
                 <section class="d-flex flex-row">
                         <div class="me-3">
                             <label for="co-metrics" class="form-label text-light">CO</label>
-                            <input name="co" id="co-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01" required>    
+                            <input name="co" id="co-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01">    
                         </div>
                         <div class="me-3">
                             <label for="no2-metrics" class="form-label text-light">NO<sub>2</sub></label>
-                            <input name="no2" id="no2-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01" required>    
+                            <input name="no2" id="no2-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01">    
                         </div>
                         <div class="me-3">
                             <label for="nox-metrics" class="form-label text-light">NO<sub>x</sub></label>
-                            <input name="nox" id="nox-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01" required>    
+                            <input name="nox" id="nox-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01">    
                         </div>
                         <div class="me-3">
                             <label for="o3-metrics" class="form-label text-light">O<sub>3</sub></label>
-                            <input name="o3" id="o3-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01" required>    
+                            <input name="o3" id="o3-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01">    
                         </div>
                         <div>
                             <label for="pm10-metrics" class="form-label text-light">PM<sub>10</sub></label>
-                            <input name="pm10" id="pm10-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01" required>    
+                            <input name="pm10" id="pm10-metrics" type="number" class="form-control text-white bg-transparent mb-3" placeholder="0.00" min="0" step="0.01">    
                         </div>
                     </section>
             </form>
@@ -65,7 +65,7 @@ const bodyRequest = {
     pm10: parseFloat(formHtml.pm10.value)
 }; 
 
-fetch(`/edit/${data}/${ora}/${localStorage.getItem(filename)}`, { 
+fetch(`/files/${data}/${ora}/${localStorage.getItem(filename)}`, { 
         method: 'PUT',
         headers: {'content-type':'application/json'},
         body:JSON.stringify(bodyRequest)

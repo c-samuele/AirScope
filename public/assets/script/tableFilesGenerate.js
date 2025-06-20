@@ -28,7 +28,7 @@ function tableFilesGenerate(files, debug) {
         // aggiungo un'event listener
         tdDelete.addEventListener('click', () => {
           if (confirm(`Eliminare il file: [${item.filename}] ?`)) {
-            fetch(`/deletefiles/${item.filename}`, { method: 'DELETE'})
+            fetch(`/files/${item.filename}`, { method: 'DELETE'})
               .then(response => {
                 if (response.ok) {
                   showToast('success', "File eliminato con successo!");

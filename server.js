@@ -1,19 +1,17 @@
-// CONFIGURAZIONE SERVER ---------------------------------------------------|
 const express = require('express');    // Framework per creare server web
 const multer = require('multer');      // Middleware per gestire il caricamento di file
 const path = require('path');          // Utility per lavorare con percorsi di file e directory
 const fs = require('fs');              // File System per lavorare con file e directory 
 const csvParse = require('csv-parse'); // Per convertire csv in json
 
-const app = express();                        // Crea un'app Express
-const PORT = 3000;                            // Porta su cui il server ascolta
+const app = express();                 // Crea un'app Express
+const PORT = 3000;                     // Porta su cui il server ascolta
 
-const UPLOAD_PATH = './upload/'; // PATH di salvataggio dati
+const UPLOAD_PATH = './upload/';       // nome della directory di salvataggio
 
-app.use(express.static('public'));     // direttiva file statici
+app.use(express.static('public'));     // direttiva file public
 
-// Librerie statiche pubbliche ------------------------------------------------------------------|
-
+// Librerie pubbliche ---------------------------------------------------------------------|
 // __dirname è il path relativo alla posizione del server.js variabile globale di node.js
 app.use('/jquery', express.static(path.join(__dirname, 'node_modules/jquery/dist')));
 app.use('/chart', express.static(path.join(__dirname, 'node_modules/chart.js/dist')));
@@ -24,15 +22,11 @@ const {normalizeDate,normalizeTime} = require('./utils/normalize.js');
 const {readFilesList,addFileList,removeFile} = require('./utils/filesUtility.js');
 const {removeDataFile} = require('./utils/dataUtility.js');
 
-
-// per inviare richieste con body json
-app.use(express.json());
-
+app.use(express.json());    // per inviare richieste con body json
 
 const FILES_LIST_PATH = path.join(__dirname, 'upload', 'files.json'); // Percorso completo del file JSON che conterrà la lista dei file caricati
 
 // CREO il file per la GESTIONE DEI FILES --------------------------------------|
-// Controllo se il file.json esiste già nella cartella /upload
 if (!fs.existsSync(FILES_LIST_PATH)) {
   fs.writeFileSync(FILES_LIST_PATH, '[]', 'utf8');  // Se NON esiste, lo CREO con un array vuoto
   console.log("[files.json] è stato creato!\n")
@@ -55,10 +49,9 @@ const upload = multer({ storage: storage });
 
 
 // ****************************** ENDPOINT ******************************|
-
 // REQUEST ---------------------------------------------------------------------------|
 // Endpoint POST per il caricamento file
-app.post('/upload', upload.single('file'), (req, res) => {
+app.post('/files', upload.single('file'), (req, res) => {
 
   // LOG DI DEBUG --------------------|
   // console.log('req.body:', req.body);
@@ -75,17 +68,18 @@ app.post('/upload', upload.single('file'), (req, res) => {
   const csvFilePath = req.file.path;
   const csvFileName = req.file.filename;     
 
-
   // LOG DI DEBUG --------------------|
   // console.log('Città:', citta);
   // console.log('Ente:', ente);
   // console.log('Percorso file:', csvFilePath + "\n");
   // ---------------------------------|
 
-// -- Controllo se esiste già -------------------------------|
+  // creo il nome nuovo
   const jsonFileName = req.file.filename.replace(/\.csv$/i, '.json');
 
-  const files = readFilesList();  // ottengo l'array di oggetti
+  // -- Controllo se esiste già -------------------------------|
+
+  const files = readFilesList();  // array di oggetti file
 
   // Log per debug del confronto
   console.log("\n|---------Match:---------|\n");
@@ -100,11 +94,11 @@ app.post('/upload', upload.single('file'), (req, res) => {
             else 
               console.log('File CSV rimosso:', csvFilePath);
           });
-    return res.status(400).type('text/plain').send('File già esistente!'); 
+    return res.status(400).type('text/plain').send('File già esistente!'); // 1° uscita dall'handler 
   }
 
 
-  const dati = [];     // variabile di salvataggio dati
+  const dati = [];  // Per il salvataggio delle misurazioni
 
   fs.createReadStream(csvFilePath)  // stream di lettura sul file csv    
     .pipe(  // Passa lo stream al parser
@@ -128,7 +122,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
       console.log("il primo oggetto:",dati.slice(0, 1), "\n"); // LOG di DEBUG -----------|
       console.log("csvNameFile: [",csvFileName ,"]\n"); // LOG di DEBUG -----------|
-/* ------------------------------------------------------------------------------------------------------------------------*/
+
       // Oggetto da Salvare -------------------------|
       const outputObject = {
         citta: citta, 
@@ -172,7 +166,6 @@ app.post('/upload', upload.single('file'), (req, res) => {
           console.log('File CSV rimosso:', csvFilePath);
       });
 
-        
         res.type('text/plain').status(201).send('File caricato e converito correttamente!');
       });
     }) // END 
@@ -186,13 +179,12 @@ app.post('/upload', upload.single('file'), (req, res) => {
 }); // END Handler
 
 // Endpoint per aggiungere un nuovo elemento
-app.post('/newItem', (req, res) => {
+app.post('/files/measurements/:filename', (req, res) => {
   // elemento da aggiungere
   const newItem = req.body;   
   // Salvo il file su cui operare
-  const fileInUse = newItem.filename;
+  const fileInUse = req.params.filename;
   // Elimino il nome che non serve tra le misurazioni
-  delete newItem.fileInUse;
   console.log('File in uso:',fileInUse,'\n');
   console.log('Nuovo item ricevuto:', newItem,'\n');
   // Lettura db
@@ -206,9 +198,10 @@ app.post('/newItem', (req, res) => {
 
     // scrivo le modifiche in json
     fs.writeFile(path.join(UPLOAD_PATH,fileInUse), JSON.stringify(database, null, 2), (err) => {
-      if (err) return res.status(500).json({ error: 'Errore scrittura DB' });
+      if (err) 
+        return res.status(500).contentType('text/plain').send('Errore scrittura');
       // risposta server sucess
-      res.status(200).json({ message: 'Misurazione aggiunta con successo!' });
+      res.status(200).contentType('text/plain').send( 'Misurazione aggiunta con successo!');
     });
   });
 });
@@ -217,7 +210,7 @@ app.post('/newItem', (req, res) => {
 
 
 // Endpoint GET per leggere il file in uso ------------------------------------------------|
-app.get('/upload/data/:filename', (req, res) => {
+app.get('/files/data/:filename', (req, res) => {
 
   try{
     // Legge il contenuto del file come stringa 
@@ -230,8 +223,8 @@ app.get('/upload/data/:filename', (req, res) => {
 });
 // ----------------------------------------------------------------------------------------------|
 
-// Endpoint GET leggere i files ------------------------------------------------|
-app.get('/get/files', (req,res) => {
+// Endpoint GET leggere la lista dei file ------------------------------------------------|
+app.get('/files/list', (req,res) => {
 
   try{
     const files = fs.readFileSync('./upload/files.json', 'utf8');
@@ -244,8 +237,7 @@ app.get('/get/files', (req,res) => {
 });
 
 // Endpoint per rimuovere un file caricato -----------------------------------------------------|
-app.delete('/deletefiles/:name',(req,res) => {
-  removeDataFile(req.params.name);
+app.delete('/files/:name',(req,res) => {
 try{
   // Eliminare i dati.json
   removeDataFile(req.params.name);
@@ -261,7 +253,7 @@ try{
 
 
 // Endpoint DELETE per rimuovere una misurazione tramite DATA e ORA -----------------------------|
-app.delete('/delete/:data/:ora/:filename', (req, res) => {
+app.delete('/files/:data/:ora/:filename', (req, res) => {
   const dataParam = req.params.data;
   const oraParam = req.params.ora;
 
@@ -288,9 +280,9 @@ app.delete('/delete/:data/:ora/:filename', (req, res) => {
 // ----------------------------------------------------------------------------------------------|
 
 // Endpoint PUT per modificare i valori
-app.put('/edit/:data/:ora/:filename', (req,res)=>{
+app.put('/files/:data/:ora/:filename', (req,res)=>{
   
-  fs.readFile(path.join(UPLOAD_PATH,req.params.filename),'utf8',(err,fileData)=>{
+  fs.readFile(path.join(UPLOAD_PATH,req.params.filename),'utf8',(err,fileData) => {
   if(err){
     res.status(500).type('text/plain').send('Errore lettura file');
     return;
@@ -303,7 +295,7 @@ app.put('/edit/:data/:ora/:filename', (req,res)=>{
   let dataSet = JSON.parse(fileData);
 
   const entry = dataSet.dati.find(item => (item.data === req.params.data) && (item.ora === req.params.ora));
-console.log("Misurazione da modificare :", entry);
+  console.log("Misurazione da modificare :", entry);
     if (!entry) {
       res.status(404).type('text/plain').send('Misurazione non trovata');
       return;
@@ -335,46 +327,3 @@ console.log("Misurazione da modificare :", entry);
 app.listen(3000, () => {
   console.log(`Server in ascolto su http://localhost:${PORT}\n`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// esempi a lezione
-  // Endpoint GET con parametro URL (route param)
-  app.get('/doc/:nome', (req, res) => {
-    if (req.params.nome)
-      res.type('text/plain').send('Hello ' + req.params.nome);
-    else 
-      res.status(400).send('Nome non fornito');
-  });
-
-  // Endpoint GET con query parameter
-  app.get('/doc', (req, res) => {
-    if (req.query.nome)
-      res.status(200).type('text/plain').send('Hello ' + req.query.nome);
-    else 
-      res.status(400).send('Nome non fornito');
-  });
-
-  // Endpoint POST con parametro nel body (richiesta JSON o form data)
-  app.post('/doc/body/', (req, res) => {
-    console.log("POST route body");
-    res.status(200).type('text/plain').send('Hello ' + req.body.nome);
-  });

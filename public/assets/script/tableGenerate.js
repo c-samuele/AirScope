@@ -41,7 +41,7 @@ function tableGenerate(database,  // Endpoint GET
 
         tdDelete.addEventListener('click', () => {
         // if (confirm(`Eliminare la misurazione: [${item.data} ${item.ora}] ?`)){
-          fetch(`/delete/${item.data}/${item.ora}/${localStorage.getItem(filename)}`, { method: 'DELETE' })
+          fetch(`/files/${item.data}/${item.ora}/${localStorage.getItem(filename)}`, { method: 'DELETE' })
             .then(response => {
               if (response.ok) {
                 showToast('success',"Misurazione eliminata con successo!");
