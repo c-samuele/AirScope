@@ -168,7 +168,6 @@ switch(type) {
       });
       // end ----------------------------------------------------------- //
 
-
     // Tabella dei file caricati
     tableFilesGenerate('/files/list',debug);
 

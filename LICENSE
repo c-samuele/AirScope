@@ -1,0 +1,30 @@
+Copyright (c) 2025 Samuele Caporale - AirScope
+
+All rights reserved.
+
+This software, named **AirScope**, is provided exclusively for educational and personal use.
+
+The following actions are strictly prohibited:
+- commercial use
+- modification of the code
+- redistribution, even partial
+- incorporation into other projects
+
+Viewing and studying the code is allowed solely for educational purposes, provided that proper credit to the original author is always maintained.
+
+For any other kind of use, written permission must be obtained from the author.
+
+---
+
+## Third-party libraries
+
+This project makes use of open source libraries subject to their respective licenses, including:
+
+- Node.js – MIT License  
+- Express – MIT License  
+- Multer – MIT License  
+- jQuery – MIT License  
+- Bootstrap – MIT License
+
+All third-party libraries retain their original licenses, which are **not altered or restricted** by this license.  
+Anyone using this project must also comply with the licenses of these libraries.

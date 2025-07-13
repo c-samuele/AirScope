@@ -175,8 +175,8 @@ app.post('/files', upload.single('file'), (req, res) => {
       console.error('Errore nel parsing: ' + err);
       res.type('text/plain').status(500).send('Errore nel parsing del CSV.');
     });
-
 }); // END Handler
+
 
 // Endpoint per aggiungere un nuovo elemento
 app.post('/files/measurements/:filename', (req, res) => {
@@ -189,7 +189,7 @@ app.post('/files/measurements/:filename', (req, res) => {
   console.log('Nuovo item ricevuto:', newItem,'\n');
   // Lettura db
   fs.readFile(path.join(UPLOAD_PATH,fileInUse), 'utf8', (err, data) => {
-    if (err) return res.status(500).json({ error: 'Errore lettura DB' });
+    if (err) return res.status(500).contentType('text/plain').send('Errore lettura DB'); // errore corretto
 
     // converto in oggetto js
     const database = JSON.parse(data);
