@@ -316,9 +316,9 @@ npm start
 5. Open your browser at `http://localhost:3000` (example port; use the one configured in the project).
 
 ## References
-- Report (reference documentation): `Relazione_AirScope.pdf`
-- ARPA Marche: https://www.arpa.marche.it/
-- Creative Commons BY 4.0: https://creativecommons.org/licenses/by/4.0/
+- [Report (reference documentation)](./docs/Relazione_AirScope.pdf)
+- [ARPA Marche](https://www.arpa.marche.it/)
+- [Creative Commons BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 ## Contact
 Author: Samuele Caporale – samuelecaporale@icloud.com
