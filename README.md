@@ -300,8 +300,8 @@ E2E testing is performed in the final phase to verify the entire application flo
 1. Make sure you have Node.js (>= 14) and npm installed.
 2. Clone the repository:
 ```bash
-git clone <your-repo-url>
-cd <your-repo>
+git clone <repo-url>
+cd <repo>
 ```
 3. Install dependencies:
 ```bash
